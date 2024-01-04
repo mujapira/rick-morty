@@ -36,10 +36,11 @@ module.exports = {
           },
         }
       },
+      
       animation: {
         slide: 'slide 1.5s ease-in-out',
         shrink: 'shrink 0.3s ease-in-out forwards',
-        grow: 'grow 0.3s ease-in-out',
+        grow: 'grow 0.3s ease-in-out forwards',
       },
     },
   },

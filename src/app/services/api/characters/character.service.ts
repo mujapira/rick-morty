@@ -3,15 +3,15 @@ import { Injectable } from "@angular/core"
 import { Observable } from "rxjs"
 import { Character } from "../models/character"
 
-interface CharacterInfo {
+interface RequestInfo {
   count: number
   pages: number
   next: string | null
   prev: string | null
 }
 
-interface AllCharactersAPIResponse {
-  info: CharacterInfo
+export interface AllCharactersAPIResponse {
+  info: RequestInfo
   results: Character[]
 }
 
@@ -29,18 +29,22 @@ export class CharacterService {
     "Access-Control-Allow-Origin": "*",
   })
 
-  getAllCharacters(): Observable<Object> {
+  getAllCharacters(): Observable<AllCharactersAPIResponse> {
     const targetUrl: string = `${this.baseUrl}`
     return this.http.get<AllCharactersAPIResponse>(targetUrl, { headers: this.headers })
   }
 
-  getCharacter(id: number): Observable<Object> {
+  getCharacter(id: number): Observable<Character> {
     const targetUrl: string = `${this.baseUrl}/${id}`
     return this.http.get<Character>(targetUrl, { headers: this.headers })
   }
 
-  getCharacters(ids: number[]): Observable<Object> {
+  getCharacters(ids: number[]): Observable<Character[]> {
     const targetUrl: string = `${this.baseUrl}/${ids}`
     return this.http.get<Character[]>(targetUrl, { headers: this.headers })
+  }
+
+  getCharactersByUrl(url: string): Observable<AllCharactersAPIResponse> {
+    return this.http.get<AllCharactersAPIResponse>(url, { headers: this.headers });
   }
 }
