@@ -25,10 +25,23 @@ body {
   font-size: 1.625rem;
   text-shadow: 0.02em 0.02em 0.8em #7ffa67, -0.02em -0.02em 0.02em #7ffa67,
     0 0 0.2em #7ffa67;
-  color: #3bbccd;
+  color: rgb(167 243 208 / 100%);
   transition: all 0.3s;
 }
 
 .special-logo-text:hover {
-  color: rgb(167 243 208 / 100%);
+  color: #3bbccd;
+}
+
+.mat-drawer-side {
+  border: none !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
