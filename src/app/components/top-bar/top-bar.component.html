@@ -1,0 +1,18 @@
+<nav class="py-4">
+    <div class="container flex items-center justify-between max-w-screen-xl px-3 mx-auto">
+        <a [routerLink]="['/']" class="special-logo-text">
+            RICK AND MORTY
+        </a>
+        <ul class="flex space-x-4">
+            <li class="text-base font-medium transition-all duration-300 text-zinc-200 hover:text-zinc-400">
+                <a [routerLink]="['/characters']" routerLinkActive="active">Characters</a>
+            </li>
+            <li class="text-base font-medium transition-all duration-300 text-zinc-200 hover:text-zinc-400">
+                <a [routerLink]="['/episodes']" routerLinkActive="active">Episodes</a>
+            </li>
+            <li class="text-base font-medium transition-all duration-300 text-zinc-200 hover:text-zinc-400">
+                <a [routerLink]="['/locations']" routerLinkActive="active">Locations</a>
+            </li>
+        </ul>
+    </div>
+</nav>
