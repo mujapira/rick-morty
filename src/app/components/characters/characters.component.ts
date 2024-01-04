@@ -8,7 +8,23 @@ import { Router } from "@angular/router"
 import { CommonModule } from "@angular/common"
 import { MatIconModule } from "@angular/material/icon"
 import { NgIcon, provideIcons } from "@ng-icons/core"
-import { matKeyboardDoubleArrowRightOutline,matKeyboardDoubleArrowLeftOutline, matKeyboardArrowRightOutline, matKeyboardArrowLeftOutline } from '@ng-icons/material-icons/outline';
+import {
+  matKeyboardDoubleArrowRightOutline,
+  matKeyboardDoubleArrowLeftOutline,
+  matKeyboardArrowRightOutline,
+  matKeyboardArrowLeftOutline,
+  matBadgeOutline,
+  matAccountBoxOutline,
+  matMaleOutline,
+  matFemaleOutline,
+  matHelpOutline,
+  matDangerousOutline,
+  matFavoriteOutline,
+  matDoNotDisturbOnOutline,
+  matCategoryOutline,
+  matPinDropOutline,
+  matFavoriteBorderOutline
+} from "@ng-icons/material-icons/outline"
 
 interface RequestInfo {
   currentPage?: number | null
@@ -22,7 +38,25 @@ interface RequestInfo {
   standalone: true,
   imports: [CommonModule, MatIconModule, NgIcon],
   templateUrl: "./characters.component.html",
-  viewProviders: [provideIcons({ matKeyboardDoubleArrowRightOutline, matKeyboardDoubleArrowLeftOutline, matKeyboardArrowRightOutline, matKeyboardArrowLeftOutline })]
+  viewProviders: [
+    provideIcons({
+      matKeyboardDoubleArrowRightOutline,
+      matKeyboardDoubleArrowLeftOutline,
+      matKeyboardArrowRightOutline,
+      matAccountBoxOutline,
+      matKeyboardArrowLeftOutline,
+      matBadgeOutline,
+      matMaleOutline,
+      matFemaleOutline,
+      matHelpOutline,
+      matCategoryOutline,
+      matDangerousOutline,
+      matFavoriteOutline,
+      matDoNotDisturbOnOutline,
+      matPinDropOutline,
+      matFavoriteBorderOutline
+    }),
+  ],
 })
 export class CharactersComponent {
   //character-card starts with scale-0 opacity-0 and animate-grow so it can animate on next/prev page

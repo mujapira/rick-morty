@@ -45,3 +45,8 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.absolute-center-x {
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
