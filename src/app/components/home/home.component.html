@@ -1,6 +1,65 @@
 <div class="container flex flex-col items-center justify-center max-w-screen-xl px-3 py-4 mx-auto sm:justify-between sm:flex-row">
     <div class="flex flex-col">
-        <span class="text-4xl font-semibold text-center sm:text-left text-zinc-200">Welcome to the<br>Rick and Morty Hub!</span>
+        <span class="text-4xl font-semibold text-center sm:text-left text-zinc-200">Welcome to the<br>Rick and Morty
+            Hub!</span>
     </div>
-    <img class="sm:w-1/2" src="../../../assets/portal.png" alt="Rick and Morty">
+    <img class="w-11/12 sm:w-1/2" src="../../../assets/portal.png" alt="Rick and Morty">
+</div>
+<div class="container flex flex-col items-center justify-center max-w-screen-xl px-3 py-4 mx-auto">
+    <span class="my-6 text-4xl font-semibold text-center sm:text-left text-zinc-200">Main characters</span>
+    <div class="flex flex-wrap items-center justify-center gap-6 ">
+        <div *ngFor="let character of characterList" id="{{ character.id }}"
+            class="w-auto overflow-hidden transition-all duration-200 scale-0 rounded-sm shadow-lg opacity-0 character-card group animate-grow">
+            <div class="relative flex shadow-md runded-none bg-slate-900">
+                <img [src]="character.image" alt="{{ character.name }}" class="object-cover w-40 h-40">
+
+                <div class="flex flex-col items-start justify-start p-4 text-zinc-200">
+                    <span class="text-lg font-medi um">{{ character.name }}</span>
+
+                    <div class="flex items-center justify-center gap-1">
+                        <ng-container *ngIf="character.status === 'Alive'">
+                            <ng-icon class="text-lg text-zinc-200" name="matFavoriteBorderOutline"></ng-icon>
+                        </ng-container>
+                        <ng-container *ngIf="character.status === 'Dead'">
+                            <ng-icon class="text-lg text-zinc-200" name="matDangerousOutline"></ng-icon>
+                        </ng-container>
+                        <ng-container *ngIf="character.status === 'unknown'">
+                            <ng-icon class="text-lg text-zinc-200" name="matHelpOutline"></ng-icon>
+                        </ng-container>
+                        <span class="text-base">{{character.status}}</span>
+                    </div>
+
+                    <div class="flex items-center justify-center gap-1">
+                        <ng-icon class="text-lg text-zinc-200" name="matCategoryOutline"></ng-icon>
+                        <span class="text-base">
+                            {{ character.species }}
+                        </span>
+                    </div>
+
+                    <div class="flex items-center justify-center gap-1">
+                        <ng-container *ngIf="character.gender === 'Male'">
+                            <ng-icon class="text-lg text-zinc-200" name="matMaleOutline"></ng-icon>
+                        </ng-container>
+                        <ng-container *ngIf="character.gender === 'Female'">
+                            <ng-icon class="text-lg text-zinc-200" name="matFemaleOutline"></ng-icon>
+                        </ng-container>
+                        <ng-container *ngIf="character.gender === 'Genderless'">
+                            <ng-icon class="text-lg text-zinc-200" name="matDoNotDisturbOnOutline"></ng-icon>
+                        </ng-container>
+                        <ng-container *ngIf="character.gender === 'unknown'">
+                            <ng-icon class="text-lg text-zinc-200" name="matHelpOutline"></ng-icon>
+                        </ng-container>
+                        <span class="text-base">
+                            {{ character.gender }}
+                        </span>
+                    </div>
+
+                    <a class="flex items-center justify-center gap-1 hover:opacity-75" href="">
+                        <ng-icon class="text-lg text-zinc-200" name="matPinDropOutline"></ng-icon>
+                        <span class="text-base line-clamp-1">{{ character.location.name }}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
