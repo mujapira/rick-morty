@@ -1,10 +1,10 @@
 import { Routes } from "@angular/router"
-import { HomeComponent } from "./components/home/home.component"
-import { CharactersComponent } from "./components/characters/characters.component"
-import { EpisodesComponent } from "./components/episodes/episodes.component"
-import { LocationsComponent } from "./components/locations/locations.component"
+import { HomeComponent } from "./pages/home/home.component"
+import { CharactersComponent } from "./pages/characters/characters.component"
+import { EpisodesComponent } from "./pages/episodes/episodes.component"
+import { LocationsComponent } from "./pages/locations/locations.component"
 import { NotFoundComponent } from "./components/not-found/not-found.component"
-import { CharacterComponent } from "./components/character/character.component"
+import { CharacterComponent } from "./pages/character/character.component"
 
 export const routes: Routes = [
   {

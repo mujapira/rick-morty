@@ -1,12 +1,4 @@
-import {
-  AllCharactersAPIResponse,
-  CharacterService,
-} from "./../../services/api/characters/character.service"
 import { Component } from "@angular/core"
-import { Character } from "../../services/api/models/character"
-import { Router, RouterLink } from "@angular/router"
-import { CommonModule } from "@angular/common"
-import { MatIconModule } from "@angular/material/icon"
 import { NgIcon, provideIcons } from "@ng-icons/core"
 import {
   matKeyboardDoubleArrowRightOutline,
@@ -23,22 +15,25 @@ import {
   matDoNotDisturbOnOutline,
   matCategoryOutline,
   matPinDropOutline,
-  matFavoriteBorderOutline
+  matFavoriteBorderOutline,
 } from "@ng-icons/material-icons/outline"
-import { PaginationComponent } from "../pagination/pagination.component"
+import {
+  AllLocationsAPIResponse,
+  LocationService,
+  PaginationInfo,
+} from "../../services/api/locations/location.service"
+import { Router, RouterLink } from "@angular/router"
+import { CommonModule } from "@angular/common"
+import { Location } from "../../services/api/models/location"
+import { Observable, forkJoin, map } from "rxjs"
+import { Character } from "../../services/api/models/character"
+import { PaginationComponent } from "../../components/pagination/pagination.component"
 
-interface RequestInfo {
-  currentPage?: number | null
-  count: number
-  pages: number
-  next: string | null
-  prev: string | null
-}
 @Component({
-  selector: "app-characters",
+  selector: "app-locations",
   standalone: true,
-  imports: [CommonModule, MatIconModule, NgIcon, RouterLink, PaginationComponent],
-  templateUrl: "./characters.component.html",
+  imports: [NgIcon, CommonModule, RouterLink, PaginationComponent],
+  templateUrl: "./locations.component.html",
   viewProviders: [
     provideIcons({
       matKeyboardDoubleArrowRightOutline,
@@ -55,30 +50,40 @@ interface RequestInfo {
       matFavoriteOutline,
       matDoNotDisturbOnOutline,
       matPinDropOutline,
-      matFavoriteBorderOutline
+      matFavoriteBorderOutline,
     }),
   ],
 })
-export class CharactersComponent {
-  //character-card starts with scale-0 opacity-0 and animate-grow so it can animate on next/prev page
-  //clean animations removes the classes so it can animate again if needed
-  characterList: Character[] = [] as Character[]
-  paginationInfo: RequestInfo = {} as RequestInfo
+export class LocationsComponent {
+  locationList: Location[] = [] as Location[]
+  paginationInfo: PaginationInfo = {} as PaginationInfo
   isNewPageLoaded: boolean = false
 
-  constructor(private service: CharacterService, private router: Router) {}
+  constructor(private service: LocationService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loadCharacters()
+    this.loadLocations()
   }
 
-  loadCharacters(): void {
+  loadLocations(): void {
     this.service
-      .getAllCharacters()
-      .subscribe((data: AllCharactersAPIResponse) => {
-        this.characterList = data.results
-        this.paginationInfo = data.info
+      .getAllLocations()
+      .subscribe((allLocationData: AllLocationsAPIResponse) => {
+        this.paginationInfo = allLocationData.info
         this.paginationInfo.currentPage = 1
+
+        forkJoin(
+          allLocationData.results.map((location) =>
+            this.service.getLocationResidents(location.residents).pipe(
+              map((residentsData: Character[]) => ({
+                ...location,
+                actualResidents: residentsData,
+              }))
+            )
+          )
+        ).subscribe((updatedLocations: Location[]) => {
+          this.locationList = updatedLocations
+        })
       })
   }
 
@@ -162,11 +167,24 @@ export class CharactersComponent {
     this.shrinkCards()
     setTimeout(() => {
       this.service
-        .getCharactersByUrl(url)
-        .subscribe((data: AllCharactersAPIResponse) => {
+        .getLocationsByUrl(url)
+        .subscribe((data: AllLocationsAPIResponse) => {
           this.paginationInfo = data.info
+          this.paginationInfo.currentPage = 1
           this.paginationInfo.currentPage = this.getPageNumberFromUrl(url)
-          this.characterList = data.results
+
+          forkJoin(
+            data.results.map((location) =>
+              this.service.getLocationResidents(location.residents).pipe(
+                map((residentsData: Character[]) => ({
+                  ...location,
+                  actualResidents: residentsData,
+                }))
+              )
+            )
+          ).subscribe((updatedLocations: Location[]) => {
+            this.locationList = updatedLocations
+          })
         })
         .add(() => {
           this.cleanAnimations()
@@ -175,7 +193,7 @@ export class CharactersComponent {
   }
 
   shrinkCards() {
-    const elements = document.querySelectorAll(".character-card")
+    const elements = document.querySelectorAll(".location-card")
 
     elements.forEach((element) => {
       element.classList.remove("animate-grow")
@@ -184,7 +202,7 @@ export class CharactersComponent {
   }
 
   cleanAnimations() {
-    const elements = document.querySelectorAll(".character-card")
+    const elements = document.querySelectorAll(".location-card")
 
     elements.forEach((element) => {
       element.classList.remove("opacity-0")
@@ -196,5 +214,16 @@ export class CharactersComponent {
   getPageNumberFromUrl(url: string): number {
     const pageNumber = url.split("page=")[1]
     return parseInt(pageNumber)
+  }
+
+  getRandomImage(): string {
+    const images = [
+      "../../../assets/tedious.png",
+      "../../../assets/scaredMorty.png",
+      "../../../assets/fallingRick.png"
+    ]
+
+    const randomIndex = Math.floor(Math.random() * images.length)
+    return images[randomIndex]
   }
 }

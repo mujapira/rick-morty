@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterOutlet } from "@angular/router"
 import { TopBarComponent } from "./components/top-bar/top-bar.component"
 import { FooterComponent } from "./components/footer/footer.component"
 import { SidebarComponent } from "./components/sidebar/sidebar.component"
-import { CharactersComponent } from "./components/characters/characters.component"
+import { CharactersComponent } from "./pages/characters/characters.component"
 
 @Component({
   selector: "app-root",

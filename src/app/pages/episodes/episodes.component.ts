@@ -1,5 +1,11 @@
 import { Component } from "@angular/core"
-import { NgIcon, provideIcons } from "@ng-icons/core"
+import { Episode } from "../../services/api/models/episode"
+import {
+  AllEpisodesAPIResponse,
+  EpisodeService,
+  RequestPaginationInfo,
+} from "../../services/api/episodes/episode.service"
+import { Router, RouterLink } from "@angular/router"
 import {
   matKeyboardDoubleArrowRightOutline,
   matKeyboardDoubleArrowLeftOutline,
@@ -16,24 +22,17 @@ import {
   matCategoryOutline,
   matPinDropOutline,
   matFavoriteBorderOutline,
+  matSlideshowOutline,
 } from "@ng-icons/material-icons/outline"
-import {
-  AllLocationsAPIResponse,
-  LocationService,
-  PaginationInfo,
-} from "../../services/api/locations/location.service"
-import { Router, RouterLink } from "@angular/router"
+import { NgIcon, provideIcons } from "@ng-icons/core"
 import { CommonModule } from "@angular/common"
-import { Location } from "../../services/api/models/location"
-import { Observable, forkJoin, map } from "rxjs"
+import { forkJoin, map } from "rxjs"
 import { Character } from "../../services/api/models/character"
-import { PaginationComponent } from "../pagination/pagination.component"
-
+import { PaginationComponent } from "../../components/pagination/pagination.component"
 @Component({
-  selector: "app-locations",
+  selector: "app-episodes",
   standalone: true,
   imports: [NgIcon, CommonModule, RouterLink, PaginationComponent],
-  templateUrl: "./locations.component.html",
   viewProviders: [
     provideIcons({
       matKeyboardDoubleArrowRightOutline,
@@ -51,38 +50,39 @@ import { PaginationComponent } from "../pagination/pagination.component"
       matDoNotDisturbOnOutline,
       matPinDropOutline,
       matFavoriteBorderOutline,
+      matSlideshowOutline,
     }),
   ],
+  templateUrl: "./episodes.component.html",
 })
-export class LocationsComponent {
-  locationList: Location[] = [] as Location[]
-  paginationInfo: PaginationInfo = {} as PaginationInfo
-  isNewPageLoaded: boolean = false
+export class EpisodesComponent {
+  episodeList: Episode[] = [] as Episode[]
+  paginationInfo: RequestPaginationInfo = {} as RequestPaginationInfo
 
-  constructor(private service: LocationService, private router: Router) {}
+  constructor(private service: EpisodeService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loadLocations()
+    this.loadEpisodes()
   }
 
-  loadLocations(): void {
+  loadEpisodes(): void {
     this.service
-      .getAllLocations()
-      .subscribe((allLocationData: AllLocationsAPIResponse) => {
-        this.paginationInfo = allLocationData.info
+      .getAllEpisodes()
+      .subscribe((allEpisodeData: AllEpisodesAPIResponse) => {
+        this.paginationInfo = allEpisodeData.info
         this.paginationInfo.currentPage = 1
 
         forkJoin(
-          allLocationData.results.map((location) =>
-            this.service.getLocationResidents(location.residents).pipe(
+          allEpisodeData.results.map((episode) =>
+            this.service.getEpisodeCharacters(episode.characters).pipe(
               map((residentsData: Character[]) => ({
-                ...location,
-                actualResidents: residentsData,
+                ...episode,
+                actualCharacters: residentsData,
               }))
             )
           )
-        ).subscribe((updatedLocations: Location[]) => {
-          this.locationList = updatedLocations
+        ).subscribe((updatedEpisodes: Episode[]) => {
+          this.episodeList = updatedEpisodes
         })
       })
   }
@@ -167,23 +167,23 @@ export class LocationsComponent {
     this.shrinkCards()
     setTimeout(() => {
       this.service
-        .getLocationsByUrl(url)
-        .subscribe((data: AllLocationsAPIResponse) => {
-          this.paginationInfo = data.info
+        .getEpisodesByUrl(url)
+        .subscribe((allEpisodeData: AllEpisodesAPIResponse) => {
+          this.paginationInfo = allEpisodeData.info
           this.paginationInfo.currentPage = 1
           this.paginationInfo.currentPage = this.getPageNumberFromUrl(url)
-
+          
           forkJoin(
-            data.results.map((location) =>
-              this.service.getLocationResidents(location.residents).pipe(
+            allEpisodeData.results.map((episode) =>
+              this.service.getEpisodeCharacters(episode.characters).pipe(
                 map((residentsData: Character[]) => ({
-                  ...location,
-                  actualResidents: residentsData,
+                  ...episode,
+                  actualCharacters: residentsData,
                 }))
               )
             )
-          ).subscribe((updatedLocations: Location[]) => {
-            this.locationList = updatedLocations
+          ).subscribe((updatedEpisodes: Episode[]) => {
+            this.episodeList = updatedEpisodes
           })
         })
         .add(() => {
@@ -193,7 +193,7 @@ export class LocationsComponent {
   }
 
   shrinkCards() {
-    const elements = document.querySelectorAll(".location-card")
+    const elements = document.querySelectorAll(".episode-card")
 
     elements.forEach((element) => {
       element.classList.remove("animate-grow")
@@ -202,7 +202,7 @@ export class LocationsComponent {
   }
 
   cleanAnimations() {
-    const elements = document.querySelectorAll(".location-card")
+    const elements = document.querySelectorAll(".episode-card")
 
     elements.forEach((element) => {
       element.classList.remove("opacity-0")
@@ -216,14 +216,23 @@ export class LocationsComponent {
     return parseInt(pageNumber)
   }
 
-  getRandomImage(): string {
-    const images = [
-      "../../../assets/tedious.png",
-      "../../../assets/scaredMorty.png",
-      "../../../assets/fallingRick.png"
-    ]
+  transformEpisodeAndSeason(input: string): string {
+    const regex = /^S(\d+)E(\d+)$/
 
-    const randomIndex = Math.floor(Math.random() * images.length)
-    return images[randomIndex]
+    const match = input.match(regex)
+
+    if (match) {
+      const season = match[1]
+      const episode = match[2]
+      return `Season ${this.padWithZeroes(
+        season
+      )} - Episode ${this.padWithZeroes(episode)}`
+    } else {
+      return input
+    }
+  }
+
+  padWithZeroes(number: string): string {
+    return number.padStart(2, "0")
   }
 }

@@ -1,11 +1,13 @@
-import { Component } from "@angular/core"
-import { Episode } from "../../services/api/models/episode"
 import {
-  AllEpisodesAPIResponse,
-  EpisodeService,
-  RequestPaginationInfo,
-} from "../../services/api/episodes/episode.service"
+  AllCharactersAPIResponse,
+  CharacterService,
+} from "../../services/api/characters/character.service"
+import { Component } from "@angular/core"
+import { Character } from "../../services/api/models/character"
 import { Router, RouterLink } from "@angular/router"
+import { CommonModule } from "@angular/common"
+import { MatIconModule } from "@angular/material/icon"
+import { NgIcon, provideIcons } from "@ng-icons/core"
 import {
   matKeyboardDoubleArrowRightOutline,
   matKeyboardDoubleArrowLeftOutline,
@@ -21,18 +23,22 @@ import {
   matDoNotDisturbOnOutline,
   matCategoryOutline,
   matPinDropOutline,
-  matFavoriteBorderOutline,
-  matSlideshowOutline,
+  matFavoriteBorderOutline
 } from "@ng-icons/material-icons/outline"
-import { NgIcon, provideIcons } from "@ng-icons/core"
-import { CommonModule } from "@angular/common"
-import { forkJoin, map } from "rxjs"
-import { Character } from "../../services/api/models/character"
-import { PaginationComponent } from "../pagination/pagination.component"
+import { PaginationComponent } from "../../components/pagination/pagination.component"
+
+interface RequestInfo {
+  currentPage?: number | null
+  count: number
+  pages: number
+  next: string | null
+  prev: string | null
+}
 @Component({
-  selector: "app-episodes",
+  selector: "app-characters",
   standalone: true,
-  imports: [NgIcon, CommonModule, RouterLink, PaginationComponent],
+  imports: [CommonModule, MatIconModule, NgIcon, RouterLink, PaginationComponent],
+  templateUrl: "./characters.component.html",
   viewProviders: [
     provideIcons({
       matKeyboardDoubleArrowRightOutline,
@@ -49,41 +55,30 @@ import { PaginationComponent } from "../pagination/pagination.component"
       matFavoriteOutline,
       matDoNotDisturbOnOutline,
       matPinDropOutline,
-      matFavoriteBorderOutline,
-      matSlideshowOutline,
+      matFavoriteBorderOutline
     }),
   ],
-  templateUrl: "./episodes.component.html",
 })
-export class EpisodesComponent {
-  episodeList: Episode[] = [] as Episode[]
-  paginationInfo: RequestPaginationInfo = {} as RequestPaginationInfo
+export class CharactersComponent {
+  //character-card starts with scale-0 opacity-0 and animate-grow so it can animate on next/prev page
+  //clean animations removes the classes so it can animate again if needed
+  characterList: Character[] = [] as Character[]
+  paginationInfo: RequestInfo = {} as RequestInfo
+  isNewPageLoaded: boolean = false
 
-  constructor(private service: EpisodeService, private router: Router) {}
+  constructor(private service: CharacterService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loadEpisodes()
+    this.loadCharacters()
   }
 
-  loadEpisodes(): void {
+  loadCharacters(): void {
     this.service
-      .getAllEpisodes()
-      .subscribe((allEpisodeData: AllEpisodesAPIResponse) => {
-        this.paginationInfo = allEpisodeData.info
+      .getAllCharacters()
+      .subscribe((data: AllCharactersAPIResponse) => {
+        this.characterList = data.results
+        this.paginationInfo = data.info
         this.paginationInfo.currentPage = 1
-
-        forkJoin(
-          allEpisodeData.results.map((episode) =>
-            this.service.getEpisodeCharacters(episode.characters).pipe(
-              map((residentsData: Character[]) => ({
-                ...episode,
-                actualCharacters: residentsData,
-              }))
-            )
-          )
-        ).subscribe((updatedEpisodes: Episode[]) => {
-          this.episodeList = updatedEpisodes
-        })
       })
   }
 
@@ -167,24 +162,11 @@ export class EpisodesComponent {
     this.shrinkCards()
     setTimeout(() => {
       this.service
-        .getEpisodesByUrl(url)
-        .subscribe((allEpisodeData: AllEpisodesAPIResponse) => {
-          this.paginationInfo = allEpisodeData.info
-          this.paginationInfo.currentPage = 1
+        .getCharactersByUrl(url)
+        .subscribe((data: AllCharactersAPIResponse) => {
+          this.paginationInfo = data.info
           this.paginationInfo.currentPage = this.getPageNumberFromUrl(url)
-          
-          forkJoin(
-            allEpisodeData.results.map((episode) =>
-              this.service.getEpisodeCharacters(episode.characters).pipe(
-                map((residentsData: Character[]) => ({
-                  ...episode,
-                  actualCharacters: residentsData,
-                }))
-              )
-            )
-          ).subscribe((updatedEpisodes: Episode[]) => {
-            this.episodeList = updatedEpisodes
-          })
+          this.characterList = data.results
         })
         .add(() => {
           this.cleanAnimations()
@@ -193,7 +175,7 @@ export class EpisodesComponent {
   }
 
   shrinkCards() {
-    const elements = document.querySelectorAll(".episode-card")
+    const elements = document.querySelectorAll(".character-card")
 
     elements.forEach((element) => {
       element.classList.remove("animate-grow")
@@ -202,7 +184,7 @@ export class EpisodesComponent {
   }
 
   cleanAnimations() {
-    const elements = document.querySelectorAll(".episode-card")
+    const elements = document.querySelectorAll(".character-card")
 
     elements.forEach((element) => {
       element.classList.remove("opacity-0")
@@ -214,25 +196,5 @@ export class EpisodesComponent {
   getPageNumberFromUrl(url: string): number {
     const pageNumber = url.split("page=")[1]
     return parseInt(pageNumber)
-  }
-
-  transformEpisodeAndSeason(input: string): string {
-    const regex = /^S(\d+)E(\d+)$/
-
-    const match = input.match(regex)
-
-    if (match) {
-      const season = match[1]
-      const episode = match[2]
-      return `Season ${this.padWithZeroes(
-        season
-      )} - Episode ${this.padWithZeroes(episode)}`
-    } else {
-      return input
-    }
-  }
-
-  padWithZeroes(number: string): string {
-    return number.padStart(2, "0")
   }
 }
