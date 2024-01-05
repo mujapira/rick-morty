@@ -222,15 +222,4 @@ export class LocationsComponent {
     const pageNumber = url.split("page=")[1]
     return parseInt(pageNumber)
   }
-
-  getRandomImage(): string {
-    const images = [
-      "../../../assets/tedious.png",
-      "../../../assets/scaredMorty.png",
-      "../../../assets/fallingRick.png"
-    ]
-
-    const randomIndex = Math.floor(Math.random() * images.length)
-    return images[randomIndex]
-  }
 }
