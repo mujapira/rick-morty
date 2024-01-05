@@ -1,1 +1,113 @@
-<p>episodes works!</p>
+<div
+    class="container flex items-center justify-center sm:justify-between max-w-screen-xl px-3 py-4 mx-auto sm:min-h-[calc(100vh-130px)] flex-col sm:flex-row">
+    <div class="flex flex-col animate-slide">
+        <div class="flex items-center justify-end">
+            <div class="flex justify-center gap-1 mb-4 text-zinc-200">
+                <button
+                    class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+                    [disabled]="paginationInfo.currentPage === 1" (click)="handlePageNumber('first')">
+                    1
+                </button>
+                <button
+                    class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+                    [disabled]="paginationInfo.currentPage && paginationInfo.currentPage - 4 <= 1"
+                    (click)="handlePageNumber('superPrev')">
+                    <ng-icon class="text-lg" name="matKeyboardDoubleArrowLeftOutline"></ng-icon>
+                </button>
+                <button
+                    class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+                    [disabled]="!paginationInfo.prev" (click)="handlePageNumber('prev')">
+                    <ng-icon class="text-lg" name="matKeyboardArrowLeftOutline"></ng-icon>
+                </button>
+                <div class="flex items-center justify-center py-[2px] px-4 text-lg align-middle rounded-sm text-bold">
+                    {{ paginationInfo.currentPage }}
+                </div>
+                <button
+                    class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+                    [disabled]="!paginationInfo.next" (click)="handlePageNumber('next')">
+                    <ng-icon class="text-lg" name="matKeyboardArrowRightOutline"></ng-icon>
+                </button>
+                <button
+                    class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+                    [disabled]="paginationInfo.currentPage && paginationInfo.currentPage + 4 >= paginationInfo.pages"
+                    (click)="handlePageNumber('superNext')">
+                    <ng-icon class="text-lg" name="matKeyboardDoubleArrowRightOutline"></ng-icon>
+                </button>
+                <button
+                    class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+                    [disabled]="paginationInfo.currentPage === paginationInfo.pages"
+                    (click)="handlePageNumber('last')">{{
+                    paginationInfo.pages
+                    }}</button>
+            </div>
+        </div>
+        <div class="flex flex-wrap items-center justify-center w-full gap-4 xl:grid xl:grid-cols-4">
+            <div *ngFor="let episode of episodeList" id="{{ episode.id }}"
+                class="relative z-0 w-auto h-full transition-all duration-200 scale-0 rounded-sm opacity-0 min-h-80 episode-card group animate-grow">
+                <div class="relative shadow-md runded-none bg-slate-900">
+                    <div class="flex items-start justify-start gap-2 p-4 text-zinc-200">
+                        <div class="flex items-center justify-center min-w-6">
+                            <ng-icon class="text-2xl text-zinc-200" name="matSlideshowOutline"></ng-icon>
+                        </div>
+                        <span class="text-lg font-medium line-clamp-1">{{ episode.name }}</span>
+                    </div>
+                    <div class="flex flex-col items-start justify-start w-full px-4 text-zinc-200">
+                        <span class="text-base">{{ transformEpisodeAndSeason(episode.episode) }}</span>
+                        <span class="text-base">{{ episode.air_date }}</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 p-4 overflow-y-scroll max-h-[280px]">
+                        <a *ngFor="let character of episode.actualCharacters" id="{{ episode.id }}"
+                            class="relative w-20 h-20" href="" [routerLink]="'/characters/' + character.id" >
+                            <img [src]="character.image"
+                                class="transition-all duration-300 rounded-full"
+                                [alt]="character.name">
+                            <div
+                                class="absolute inset-0 flex items-center justify-center text-center transition-opacity rounded-full opacity-0 hover:opacity-100 hover:bg-neutral-600/75">
+                                <span class="text-sm font-bold text-zinc-200">{{ character.name }}</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center justify-end">
+            <div class="flex justify-center gap-1 mt-4 text-zinc-200">
+                <button
+                    class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+                    [disabled]="paginationInfo.currentPage === 1" (click)="handlePageNumber('first')">
+                    1
+                </button>
+                <button
+                    class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+                    [disabled]="paginationInfo.currentPage && paginationInfo.currentPage - 4 <= 1"
+                    (click)="handlePageNumber('superPrev')">
+                    <ng-icon class="text-lg" name="matKeyboardDoubleArrowLeftOutline"></ng-icon>
+                </button>
+                <button
+                    class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+                    [disabled]="!paginationInfo.prev" (click)="handlePageNumber('prev')">
+                    <ng-icon class="text-lg" name="matKeyboardArrowLeftOutline"></ng-icon>
+                </button>
+                <div class="flex items-center justify-center py-[2px] px-4 text-lg align-middle rounded-sm text-bold">
+                    {{ paginationInfo.currentPage }}
+                </div>
+                <button
+                    class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+                    [disabled]="!paginationInfo.next" (click)="handlePageNumber('next')">
+                    <ng-icon class="text-lg" name="matKeyboardArrowRightOutline"></ng-icon>
+                </button>
+                <button
+                    class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+                    [disabled]="paginationInfo.currentPage && paginationInfo.currentPage + 4 >= paginationInfo.pages"
+                    (click)="handlePageNumber('superNext')">
+                    <ng-icon class="text-lg" name="matKeyboardDoubleArrowRightOutline"></ng-icon>
+                </button>
+                <button
+                    class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+                    [disabled]="paginationInfo.currentPage === paginationInfo.pages"
+                    (click)="handlePageNumber('last')">{{
+                    paginationInfo.pages
+                    }}</button>
+            </div>
+        </div>
+    </div>

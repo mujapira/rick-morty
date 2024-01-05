@@ -1,3 +1,5 @@
+import { Character } from "./character"
+
 export interface Episode {
   id: number
   name: string
@@ -5,6 +7,7 @@ export interface Episode {
   episode: string
   characters: string[]
   url: string
+  actualCharacters?: Character[]
   created: string
 }
 
