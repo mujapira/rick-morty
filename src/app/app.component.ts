@@ -21,4 +21,5 @@ import { CharactersComponent } from "./components/characters/characters.componen
 })
 export class AppComponent {
   title = "rickandmorty"
+  
 }

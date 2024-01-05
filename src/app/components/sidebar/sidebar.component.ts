@@ -5,7 +5,8 @@ import { MatSidenavModule } from "@angular/material/sidenav"
 import { NgIcon } from "@ng-icons/core"
 import {} from "@ng-icons/material-icons"
 import { MatIconModule } from "@angular/material/icon"
-import { RouterLink } from "@angular/router"
+import { NavigationEnd, Router, RouterLink } from "@angular/router"
+import { filter } from "rxjs"
 @Component({
   selector: "app-sidebar",
   standalone: true,
@@ -13,7 +14,12 @@ import { RouterLink } from "@angular/router"
   templateUrl: "./sidebar.component.html",
 })
 export class SidebarComponent {
-  constructor(public SidebarService: SidebarService) {}
+  constructor(public sidebarService: SidebarService, private router: Router) {
+    this.router.events
+    .pipe(filter((event) => event instanceof NavigationEnd))
+    .subscribe(() => {
+      this.sidebarService.closeSidebar();
+    });
+  }
 
-  showFiller = true
 }
