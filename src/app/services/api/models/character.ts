@@ -1,3 +1,5 @@
+import { Episode } from "./episode"
+
 export interface Character {
   id: number
   name: string
@@ -9,8 +11,9 @@ export interface Character {
   location: Location
   image: string
   episode: string[]
+  actualEpisodes?: Episode[]
   url: string
-  created: string
+  created: string 
 }
 
 interface Origin {

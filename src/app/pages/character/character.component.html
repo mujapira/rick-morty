@@ -1,8 +1,7 @@
-<div
-    class="container flex flex-col items-center justify-center max-w-screen-xl px-3 py-4 mx-auto sm:justify-between sm:flex-row">
-    <div class="flex flex-col items-center justify-center p-4 mx-auto rounded-sm bg-slate-900">
-        <img [src]="character.image" alt="{{ character.name }}" class="object-cover w-64 h-64 rounded-full">
+<div class="container flex flex-col items-start justify-center max-w-screen-xl gap-4 px-3 py-4 mx-auto sm:flex-row">
 
+    <div class="flex flex-col items-center justify-center w-full p-4 rounded-sm sm:w-auto bg-slate-900">
+        <img [src]="character.image" alt="{{ character.name }}" class="object-cover w-64 h-64 rounded-full">
         <div class="flex flex-col items-start justify-center w-full pt-2 text-zinc-200">
             <span class="text-lg font-medium">{{ character.name }}</span>
 
@@ -17,12 +16,8 @@
                     <ng-icon class="text-lg" name="matHelpOutline"></ng-icon>
                 </ng-container>
                 <span class="text-base">{{character.status}}</span>
-            </div>
-
-            <div class="flex items-center justify-center gap-1">
-                <ng-icon class="text-lg" name="matCategoryOutline"></ng-icon>
                 <span class="text-base">
-                    {{ character.species }}
+                    - {{ character.species }}
                 </span>
             </div>
 
@@ -43,6 +38,38 @@
                     {{ character.gender }}
                 </span>
             </div>
+
+            <div class="flex items-center justify-center gap-1">
+                <ng-icon class="text-lg text-zinc-200" name="matPinDropOutline"></ng-icon>
+
+                <span class="text-base">{{character.location.name}}</span>
+            </div>
+
+            <div class="flex items-center justify-center gap-1">
+                <ng-icon class="text-lg text-zinc-200" name="matCribOutline"></ng-icon>
+                <span class="text-base">{{character.origin.name}}</span>
+            </div>
+        </div>
+    </div>
+    <div
+        class="flex flex-col items-start justify-center w-full p-4 text-lg rounded-sm sm:w-auto text-zinc-200 bg-slate-900">
+        <span>Episode count {{character.episode.length}}</span>
+
+        <div class="z-0 w-auto w-full overflow-y-auto rounded-sm sm:w-auto episode-list max-h-96">
+            <a *ngFor="let episode of character.actualEpisodes" id="{{ episode.id }}"
+                class="flex flex-col py-4 transition-all duration-300 episode-card hover:opacity-75"
+                [routerLink]="'/episode'+episode.id">
+                <div class="flex items-start justify-start gap-2 text-zinc-200">
+                    <div class="flex items-center justify-center min-w-6">
+                        <ng-icon class="text-2xl text-zinc-200" name="matSlideshowOutline"></ng-icon>
+                    </div>
+                    <span class="text-lg font-medium line-clamp-1">{{ episode.name }}</span>
+                </div>
+                <div class="flex flex-col items-start justify-start w-full text-zinc-200">
+                    <span class="text-base">{{ transformEpisodeAndSeason(episode.episode) }}</span>
+                    <span class="text-base">{{ episode.air_date }}</span>
+                </div>
+            </a>
         </div>
     </div>
 </div>

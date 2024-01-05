@@ -5,6 +5,8 @@ import { EpisodesComponent } from "./pages/episodes/episodes.component"
 import { LocationsComponent } from "./pages/locations/locations.component"
 import { NotFoundComponent } from "./components/not-found/not-found.component"
 import { CharacterComponent } from "./pages/character/character.component"
+import { LocationComponent } from "./pages/location/location.component"
+import { EpisodeComponent } from "./pages/episode/episode.component"
 
 export const routes: Routes = [
   {
@@ -24,8 +26,16 @@ export const routes: Routes = [
     component: EpisodesComponent,
   },
   {
+    path: "episodes/:id",
+    component: EpisodeComponent,
+  },
+  {
     path: "locations",
     component: LocationsComponent,
+  },
+  {
+    path: "locations/:id",
+    component: LocationComponent,
   },
   {
     path: "**",

@@ -20,7 +20,6 @@ export interface AllEpisodesAPIResponse {
 @Injectable({
   providedIn: "any",
 })
-
 export class EpisodeService {
   private baseUrl: string = "https://rickandmortyapi.com/api/episode"
 
@@ -56,24 +55,55 @@ export class EpisodeService {
 
   getEpisodeCharacters(residents: string[]): Observable<Character[]> {
     const validResidentIds = residents
-      .map(residentUrl => residentUrl.split('https://rickandmortyapi.com/api/character/')[1])
-      .filter(residentId => residentId);
-  
+      .map(
+        (residentUrl) =>
+          residentUrl.split("https://rickandmortyapi.com/api/character/")[1]
+      )
+      .filter((residentId) => residentId)
+
     if (validResidentIds.length > 0) {
-      const targetUrl: string = `https://rickandmortyapi.com/api/character/${validResidentIds.slice(0, 20).join(',')}`;
-      console.log(targetUrl);
-  
+      const targetUrl: string = `https://rickandmortyapi.com/api/character/${validResidentIds
+        .slice(0, 20)
+        .join(",")}`
+      console.log(targetUrl)
+
       return this.http.get<any>(targetUrl, { headers: this.headers }).pipe(
-        map(response => {
-          const characters = Array.isArray(response) ? response : [response];
+        map((response) => {
+          const characters = Array.isArray(response) ? response : [response]
           return characters.map((character: Character) => ({
             ...character,
-            actualResidents: validResidentIds.length === 1 ? validResidentIds : undefined,
-          }));
+            actualResidents:
+              validResidentIds.length === 1 ? validResidentIds : undefined,
+          }))
         })
-      );
+      )
     } else {
-      return of([]);
+      return of([])
+    }
+  }
+
+  geCharacterEpisodes(episodes: string[]): Observable<Episode[]> {
+    const validEpisodeIds = episodes
+      .map((url) => url.split("https://rickandmortyapi.com/api/episode/")[1])
+      .filter((episodeId) => episodeId)
+
+    if (validEpisodeIds.length > 0) {
+      const targetUrl: string = `https://rickandmortyapi.com/api/episode/${validEpisodeIds
+        .slice(0, 20)
+        .join(",")}`
+
+      return this.http.get<any>(targetUrl, { headers: this.headers }).pipe(
+        map((response) => {
+          const episodes = Array.isArray(response) ? response : [response]
+          return episodes.map((episode: Episode) => ({
+            ...episode,
+            actualEpisodes:
+              validEpisodeIds.length === 1 ? validEpisodeIds : undefined,
+          }))
+        })
+      )
+    } else {
+      return of([])
     }
   }
 }
