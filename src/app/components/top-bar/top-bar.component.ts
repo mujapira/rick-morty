@@ -1,4 +1,4 @@
-import { SidebarService } from "./../../services/sidebar.service"
+import { SidebarService } from "../../services/components/sidebar.service"
 import { CommonModule } from "@angular/common"
 import { Component } from "@angular/core"
 import { ActivatedRoute, Router, RouterModule } from "@angular/router"
