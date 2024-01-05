@@ -3,15 +3,17 @@
     <div class="flex flex-col animate-slide">
         <div class="flex flex-wrap items-center justify-center w-full gap-4 xl:grid xl:grid-cols-4">
             <ng-container *ngIf="!isNewPageLoaded">
-                <a routerLinkActive="active" *ngFor="let character of characterList" id="{{ character.id }}"
+                <div *ngFor="let character of characterList" id="{{ character.id }}"
                     class="w-auto overflow-hidden transition-all duration-200 scale-0 rounded-sm shadow-lg opacity-0 character-card group animate-grow">
                     <div class="relative shadow-md runded-none bg-slate-900">
-                        <div
+
+                        <a href=""
                             class="absolute flex items-center justify-center align-middle rounded-full top-1 left-1 bg-slate-900 min-w-10 min-h-10">
                             <ng-icon class="text-2xl text-zinc-200" name="matAccountBoxOutline"></ng-icon>
-                        </div>
+                        </a>
 
                         <img [src]="character.image" alt="{{ character.name }}" class="object-cover">
+
                         <div class="flex flex-col items-start justify-start p-4 text-zinc-200">
                             <span class="text-lg font-medium">{{ character.name }}</span>
 
@@ -59,7 +61,7 @@
                             </a>
                         </div>
                     </div>
-                </a>
+                </div>
             </ng-container>
         </div>
         <div class="flex items-center justify-end">
