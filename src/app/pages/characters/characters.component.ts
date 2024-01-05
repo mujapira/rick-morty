@@ -80,6 +80,9 @@ export class CharactersComponent {
         this.paginationInfo = data.info
         this.paginationInfo.currentPage = 1
       })
+      .add(() => {
+        this.cleanAnimations()
+      })
   }
 
   handlePageNumber(command: string): void {
@@ -185,6 +188,11 @@ export class CharactersComponent {
 
   cleanAnimations() {
     const elements = document.querySelectorAll(".character-card")
+    const pagination = document.querySelectorAll(".pagination")
+
+    pagination.forEach((element) => {
+      element.classList.remove("opacity-0")
+    })
 
     elements.forEach((element) => {
       element.classList.remove("opacity-0")
