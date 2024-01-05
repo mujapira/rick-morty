@@ -85,6 +85,9 @@ export class EpisodesComponent {
           this.episodeList = updatedEpisodes
         })
       })
+      .add(() => {
+        this.cleanAnimations()
+      })
   }
 
   handlePageNumber(command: string): void {
@@ -203,7 +206,11 @@ export class EpisodesComponent {
 
   cleanAnimations() {
     const elements = document.querySelectorAll(".episode-card")
+    const pagination = document.querySelectorAll(".pagination")
 
+    pagination.forEach((element) => {
+      element.classList.remove("opacity-0")
+    })
     elements.forEach((element) => {
       element.classList.remove("opacity-0")
       element.classList.remove("scale-0")
