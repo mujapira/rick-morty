@@ -28,10 +28,11 @@ import { NgIcon, provideIcons } from "@ng-icons/core"
 import { CommonModule } from "@angular/common"
 import { forkJoin, map } from "rxjs"
 import { Character } from "../../services/api/models/character"
+import { PaginationComponent } from "../pagination/pagination.component"
 @Component({
   selector: "app-episodes",
   standalone: true,
-  imports: [NgIcon, CommonModule, RouterLink],
+  imports: [NgIcon, CommonModule, RouterLink, PaginationComponent],
   viewProviders: [
     provideIcons({
       matKeyboardDoubleArrowRightOutline,

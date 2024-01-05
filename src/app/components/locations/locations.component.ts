@@ -27,11 +27,12 @@ import { CommonModule } from "@angular/common"
 import { Location } from "../../services/api/models/location"
 import { Observable, forkJoin, map } from "rxjs"
 import { Character } from "../../services/api/models/character"
+import { PaginationComponent } from "../pagination/pagination.component"
 
 @Component({
   selector: "app-locations",
   standalone: true,
-  imports: [NgIcon, CommonModule, RouterLink],
+  imports: [NgIcon, CommonModule, RouterLink, PaginationComponent],
   templateUrl: "./locations.component.html",
   viewProviders: [
     provideIcons({

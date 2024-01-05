@@ -1,0 +1,40 @@
+<div class="flex items-center justify-center sm:justify-end">
+    <div class="flex justify-center gap-1 my-4 text-zinc-200">
+        <button
+            class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+            [disabled]="paginationInfo.currentPage === 1" (click)="handlePageNumber.emit('first')">
+            1
+        </button>
+        <button
+            class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+            [disabled]="paginationInfo.currentPage && paginationInfo.currentPage - 4 <= 1"
+            (click)="handlePageNumber.emit('superPrev')">
+            <ng-icon class="text-lg" name="matKeyboardDoubleArrowLeftOutline"></ng-icon>
+        </button>
+        <button
+            class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+            [disabled]="!paginationInfo.prev" (click)="handlePageNumber.emit('prev')">
+            <ng-icon class="text-lg" name="matKeyboardArrowLeftOutline"></ng-icon>
+        </button>
+        <div class="flex items-center justify-center py-[2px] px-4 text-lg align-middle rounded-sm text-bold">
+            {{ paginationInfo.currentPage }}
+        </div>
+        <button
+            class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+            [disabled]="!paginationInfo.next" (click)="handlePageNumber.emit('next')">
+            <ng-icon class="text-lg" name="matKeyboardArrowRightOutline"></ng-icon>
+        </button>
+        <button
+            class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+            [disabled]="paginationInfo.currentPage && paginationInfo.currentPage + 4 >= paginationInfo.pages"
+            (click)="handlePageNumber.emit('superNext')">
+            <ng-icon class="text-lg" name="matKeyboardDoubleArrowRightOutline"></ng-icon>
+        </button>
+        <button
+            class="flex items-center justify-center align-middle transition-all duration-300 rounded-sm min-w-8 hover:opacity-80 bg-slate-700 disabled:bg-slate-700 disabled:opacity-50"
+            [disabled]="paginationInfo.currentPage === paginationInfo.pages"
+            (click)="handlePageNumber.emit('last')">{{
+            paginationInfo.pages
+            }}</button>
+    </div>
+</div>

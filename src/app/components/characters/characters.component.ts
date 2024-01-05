@@ -25,6 +25,7 @@ import {
   matPinDropOutline,
   matFavoriteBorderOutline
 } from "@ng-icons/material-icons/outline"
+import { PaginationComponent } from "../pagination/pagination.component"
 
 interface RequestInfo {
   currentPage?: number | null
@@ -36,7 +37,7 @@ interface RequestInfo {
 @Component({
   selector: "app-characters",
   standalone: true,
-  imports: [CommonModule, MatIconModule, NgIcon, RouterLink],
+  imports: [CommonModule, MatIconModule, NgIcon, RouterLink, PaginationComponent],
   templateUrl: "./characters.component.html",
   viewProviders: [
     provideIcons({
