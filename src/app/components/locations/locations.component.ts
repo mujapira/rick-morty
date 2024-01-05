@@ -22,7 +22,7 @@ import {
   LocationService,
   PaginationInfo,
 } from "../../services/api/locations/location.service"
-import { Router } from "@angular/router"
+import { Router, RouterLink } from "@angular/router"
 import { CommonModule } from "@angular/common"
 import { Location } from "../../services/api/models/location"
 import { Observable, forkJoin, map } from "rxjs"
@@ -31,7 +31,7 @@ import { Character } from "../../services/api/models/character"
 @Component({
   selector: "app-locations",
   standalone: true,
-  imports: [NgIcon, CommonModule],
+  imports: [NgIcon, CommonModule, RouterLink],
   templateUrl: "./locations.component.html",
   viewProviders: [
     provideIcons({
@@ -68,22 +68,22 @@ export class LocationsComponent {
     this.service
       .getAllLocations()
       .subscribe((allLocationData: AllLocationsAPIResponse) => {
-        this.paginationInfo = allLocationData.info;
-        this.paginationInfo.currentPage = 1;
+        this.paginationInfo = allLocationData.info
+        this.paginationInfo.currentPage = 1
 
         forkJoin(
           allLocationData.results.map((location) =>
             this.service.getLocationResidents(location.residents).pipe(
-              map((residentsData: Character[]) =>({
+              map((residentsData: Character[]) => ({
                 ...location,
-                actualResidents: residentsData
+                actualResidents: residentsData,
               }))
             )
           )
         ).subscribe((updatedLocations: Location[]) => {
-            this.locationList = updatedLocations;
-          });
-      });
+          this.locationList = updatedLocations
+        })
+      })
   }
 
   handlePageNumber(command: string): void {
@@ -168,24 +168,22 @@ export class LocationsComponent {
       this.service
         .getLocationsByUrl(url)
         .subscribe((data: AllLocationsAPIResponse) => {
-          this.paginationInfo = data.info;
-          this.paginationInfo.currentPage = 1;
+          this.paginationInfo = data.info
+          this.paginationInfo.currentPage = 1
           this.paginationInfo.currentPage = this.getPageNumberFromUrl(url)
-      
+
           forkJoin(
             data.results.map((location) =>
               this.service.getLocationResidents(location.residents).pipe(
                 map((residentsData: Character[]) => ({
                   ...location,
-                  actualResidents: residentsData
+                  actualResidents: residentsData,
                 }))
               )
             )
-          ).subscribe(
-            (updatedLocations: Location[]) => {
-              this.locationList = updatedLocations;
-            }
-          );
+          ).subscribe((updatedLocations: Location[]) => {
+            this.locationList = updatedLocations
+          })
         })
         .add(() => {
           this.cleanAnimations()
@@ -217,5 +215,14 @@ export class LocationsComponent {
     return parseInt(pageNumber)
   }
 
-  getLocationResidents(residents: string[]): void {}
+  getRandomImage(): string {
+    const images = [
+      "../../../assets/tedious.png",
+      "../../../assets/scaredMorty.png",
+      "../../../assets/fallingRick.png"
+    ]
+
+    const randomIndex = Math.floor(Math.random() * images.length)
+    return images[randomIndex]
+  }
 }
