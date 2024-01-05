@@ -83,10 +83,9 @@ export class LocationsComponent {
           )
         ).subscribe((updatedLocations: Location[]) => {
           this.locationList = updatedLocations
+        }).add(() => {
+          this.cleanAnimations()
         })
-      })
-      .add(() => {
-        this.cleanAnimations()
       })
   }
 
@@ -211,6 +210,7 @@ export class LocationsComponent {
     pagination.forEach((element) => {
       element.classList.remove("opacity-0")
     })
+
     elements.forEach((element) => {
       element.classList.remove("opacity-0")
       element.classList.remove("scale-0")

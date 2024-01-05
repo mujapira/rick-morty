@@ -81,12 +81,13 @@ export class EpisodesComponent {
               }))
             )
           )
-        ).subscribe((updatedEpisodes: Episode[]) => {
-          this.episodeList = updatedEpisodes
-        })
-      })
-      .add(() => {
-        this.cleanAnimations()
+        )
+          .subscribe((updatedEpisodes: Episode[]) => {
+            this.episodeList = updatedEpisodes
+          })
+          .add(() => {
+            this.cleanAnimations()
+          })
       })
   }
 
@@ -175,7 +176,7 @@ export class EpisodesComponent {
           this.paginationInfo = allEpisodeData.info
           this.paginationInfo.currentPage = 1
           this.paginationInfo.currentPage = this.getPageNumberFromUrl(url)
-          
+
           forkJoin(
             allEpisodeData.results.map((episode) =>
               this.service.getEpisodeCharacters(episode.characters).pipe(
