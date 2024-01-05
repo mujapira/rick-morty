@@ -4,6 +4,7 @@ import { CharactersComponent } from "./components/characters/characters.componen
 import { EpisodesComponent } from "./components/episodes/episodes.component"
 import { LocationsComponent } from "./components/locations/locations.component"
 import { NotFoundComponent } from "./components/not-found/not-found.component"
+import { CharacterComponent } from "./components/character/character.component"
 
 export const routes: Routes = [
   {
@@ -13,6 +14,10 @@ export const routes: Routes = [
   {
     path: "characters",
     component: CharactersComponent,
+  },
+  {
+    path: "characters/:id",
+    component: CharacterComponent,
   },
   {
     path: "episodes",

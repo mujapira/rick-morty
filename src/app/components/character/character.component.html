@@ -1,0 +1,48 @@
+<div
+    class="container flex items-center justify-center sm:justify-between max-w-screen-xl px-3 py-4 mx-auto sm:min-h-[calc(100vh-130px)] flex-col sm:flex-row">
+    <div class="flex flex-col items-center justify-center p-4 mx-auto rounded-sm bg-slate-900">
+        <img [src]="character.image" alt="{{ character.name }}" class="object-cover w-64 h-64 rounded-full">
+
+        <div class="flex flex-col items-start justify-center w-full pt-2 text-zinc-200">
+            <span class="text-lg font-medium">{{ character.name }}</span>
+
+            <div class="flex items-center justify-center gap-1">
+                <ng-container *ngIf="character.status === 'Alive'">
+                    <ng-icon class="text-lg" name="matFavoriteBorderOutline"></ng-icon>
+                </ng-container>
+                <ng-container *ngIf="character.status === 'Dead'">
+                    <ng-icon class="text-lg" name="matDangerousOutline"></ng-icon>
+                </ng-container>
+                <ng-container *ngIf="character.status === 'unknown'">
+                    <ng-icon class="text-lg" name="matHelpOutline"></ng-icon>
+                </ng-container>
+                <span class="text-base">{{character.status}}</span>
+            </div>
+
+            <div class="flex items-center justify-center gap-1">
+                <ng-icon class="text-lg" name="matCategoryOutline"></ng-icon>
+                <span class="text-base">
+                    {{ character.species }}
+                </span>
+            </div>
+
+            <div class="flex items-center justify-center gap-1">
+                <ng-container *ngIf="character.gender === 'Male'">
+                    <ng-icon class="text-lg" name="matMaleOutline"></ng-icon>
+                </ng-container>
+                <ng-container *ngIf="character.gender === 'Female'">
+                    <ng-icon class="text-lg" name="matFemaleOutline"></ng-icon>
+                </ng-container>
+                <ng-container *ngIf="character.gender === 'Genderless'">
+                    <ng-icon class="text-lg" name="matDoNotDisturbOnOutline"></ng-icon>
+                </ng-container>
+                <ng-container *ngIf="character.gender === 'unknown'">
+                    <ng-icon class="text-lg" name="matHelpOutline"></ng-icon>
+                </ng-container>
+                <span class="text-base">
+                    {{ character.gender }}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

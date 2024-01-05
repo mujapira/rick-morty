@@ -8,6 +8,7 @@
                     <div class="relative shadow-md runded-none bg-slate-900">
 
                         <a href=""
+                            [routerLink]="'/characters/' + character.id"
                             class="absolute flex items-center justify-center align-middle rounded-full top-1 left-1 bg-slate-900 min-w-10 min-h-10">
                             <ng-icon class="text-2xl text-zinc-200" name="matAccountBoxOutline"></ng-icon>
                         </a>
@@ -15,7 +16,7 @@
                         <img [src]="character.image" alt="{{ character.name }}" class="object-cover">
 
                         <div class="flex flex-col items-start justify-start p-4 text-zinc-200">
-                            <span class="text-lg font-medium">{{ character.name }}</span>
+                            <span class="text-lg font-medi um">{{ character.name }}</span>
 
                             <div class="flex items-center justify-center gap-1">
                                 <ng-container *ngIf="character.status === 'Alive'">

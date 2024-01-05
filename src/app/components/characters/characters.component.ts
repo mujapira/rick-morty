@@ -4,7 +4,7 @@ import {
 } from "./../../services/api/characters/character.service"
 import { Component } from "@angular/core"
 import { Character } from "../../services/api/models/character"
-import { Router } from "@angular/router"
+import { Router, RouterLink } from "@angular/router"
 import { CommonModule } from "@angular/common"
 import { MatIconModule } from "@angular/material/icon"
 import { NgIcon, provideIcons } from "@ng-icons/core"
@@ -36,7 +36,7 @@ interface RequestInfo {
 @Component({
   selector: "app-characters",
   standalone: true,
-  imports: [CommonModule, MatIconModule, NgIcon],
+  imports: [CommonModule, MatIconModule, NgIcon, RouterLink],
   templateUrl: "./characters.component.html",
   viewProviders: [
     provideIcons({
