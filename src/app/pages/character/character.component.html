@@ -39,26 +39,29 @@
                 </span>
             </div>
 
-            <div class="flex items-center justify-center gap-1">
+
+            <a [routerLink]="'/locations/'+getLocationId(character.location.url)"
+                class="flex items-center justify-center gap-1 transition-all duration-300 hover:opacity-75">
                 <ng-icon class="text-lg text-zinc-200" name="matPinDropOutline"></ng-icon>
-
                 <span class="text-base">{{character.location.name}}</span>
-            </div>
+            </a>
 
-            <div class="flex items-center justify-center gap-1">
+            <a [routerLink]="'/locations/'+getLocationId(character.origin.url)"
+                class="flex items-center justify-center gap-1 transition-all duration-300 hover:opacity-75">
                 <ng-icon class="text-lg text-zinc-200" name="matCribOutline"></ng-icon>
                 <span class="text-base">{{character.origin.name}}</span>
-            </div>
+            </a>
         </div>
     </div>
+
     <div
         class="flex flex-col items-start justify-center w-full p-4 text-lg rounded-sm sm:w-auto text-zinc-200 bg-slate-900">
         <span>Episode count {{character.episode.length}}</span>
 
-        <div class="z-0 w-auto w-full overflow-y-auto rounded-sm sm:w-auto episode-list max-h-96">
+        <div class="z-0 w-full overflow-y-auto rounded-sm sm:w-auto episode-list max-h-96">
             <a *ngFor="let episode of character.actualEpisodes" id="{{ episode.id }}"
                 class="flex flex-col py-4 transition-all duration-300 episode-card hover:opacity-75"
-                [routerLink]="'/episode'+episode.id">
+                [routerLink]="'/episodes/'+episode.id">
                 <div class="flex items-start justify-start gap-2 text-zinc-200">
                     <div class="flex items-center justify-center min-w-6">
                         <ng-icon class="text-2xl text-zinc-200" name="matSlideshowOutline"></ng-icon>

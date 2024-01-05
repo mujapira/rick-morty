@@ -110,4 +110,8 @@ export class CharacterComponent {
   padWithZeroes(number: string): string {
     return number.padStart(2, "0")
   }
+
+  getLocationId(locationUrl: string): string {
+    return locationUrl.split("/").pop() || ""
+  }
 }
