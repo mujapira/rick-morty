@@ -21,7 +21,7 @@ import {
   matPinDropOutline,
   matSlideshowOutline,
   matFavoriteBorderOutline,
-  matCribOutline
+  matCribOutline,
 } from "@ng-icons/material-icons/outline"
 import { forkJoin, map, switchMap } from "rxjs"
 import { EpisodeService } from "../../services/api/episodes/episode.service"
@@ -50,13 +50,15 @@ import { Episode } from "../../services/api/models/episode"
       matPinDropOutline,
       matFavoriteBorderOutline,
       matCribOutline,
-      matSlideshowOutline
+      matSlideshowOutline,
     }),
   ],
 })
 export class CharacterComponent {
   character: Character = {} as Character
   targetId: string | undefined = undefined
+  isCharacterLoaded: boolean = false
+
   constructor(
     private characterService: CharacterService,
     private episodeService: EpisodeService,
@@ -88,6 +90,11 @@ export class CharacterComponent {
       )
       .subscribe((characterEpisodes: Character) => {
         this.character = characterEpisodes
+      })
+      .add(() => {
+        setTimeout(() => {
+          this.isCharacterLoaded = true
+        }, 500)
       })
   }
 

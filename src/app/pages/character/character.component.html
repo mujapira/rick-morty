@@ -1,78 +1,159 @@
 <div class="container flex flex-col items-start justify-center max-w-screen-xl gap-4 px-3 py-4 mx-auto sm:flex-row">
 
-    <div class="flex flex-col items-center justify-center w-full p-4 rounded-sm sm:w-auto bg-slate-900">
-        <img [src]="character.image" alt="{{ character.name }}" class="object-cover w-64 h-64 rounded-full">
-        <div class="flex flex-col items-start justify-center w-full pt-2 text-zinc-200">
-            <span class="text-lg font-medium">{{ character.name }}</span>
+    <ng-container *ngIf="isCharacterLoaded">
+        <div class="flex flex-col items-center justify-center w-full p-4 rounded-sm sm:w-auto bg-slate-900">
+            <img [src]="character.image" alt="{{ character.name }}" class="object-cover w-64 h-64 rounded-full">
+            <div class="flex flex-col items-start justify-center w-full pt-2 text-zinc-200">
+                <span class="text-lg font-medium">{{ character.name }}</span>
 
-            <div class="flex items-center justify-center gap-1">
-                <ng-container *ngIf="character.status === 'Alive'">
-                    <ng-icon class="text-lg" name="matFavoriteBorderOutline"></ng-icon>
-                </ng-container>
-                <ng-container *ngIf="character.status === 'Dead'">
-                    <ng-icon class="text-lg" name="matDangerousOutline"></ng-icon>
-                </ng-container>
-                <ng-container *ngIf="character.status === 'unknown'">
-                    <ng-icon class="text-lg" name="matHelpOutline"></ng-icon>
-                </ng-container>
-                <span class="text-base">{{character.status}}</span>
-                <span class="text-base">
-                    - {{ character.species }}
-                </span>
+                <div class="flex items-center justify-center gap-1">
+                    <ng-container *ngIf="character.status === 'Alive'">
+                        <ng-icon class="text-lg" name="matFavoriteBorderOutline"></ng-icon>
+                    </ng-container>
+                    <ng-container *ngIf="character.status === 'Dead'">
+                        <ng-icon class="text-lg" name="matDangerousOutline"></ng-icon>
+                    </ng-container>
+                    <ng-container *ngIf="character.status === 'unknown'">
+                        <ng-icon class="text-lg" name="matHelpOutline"></ng-icon>
+                    </ng-container>
+                    <span class="text-base">{{character.status}}</span>
+                    <span class="text-base">
+                        - {{ character.species }}
+                    </span>
+                </div>
+
+                <div class="flex items-center justify-center gap-1">
+                    <ng-container *ngIf="character.gender === 'Male'">
+                        <ng-icon class="text-lg" name="matMaleOutline"></ng-icon>
+                    </ng-container>
+                    <ng-container *ngIf="character.gender === 'Female'">
+                        <ng-icon class="text-lg" name="matFemaleOutline"></ng-icon>
+                    </ng-container>
+                    <ng-container *ngIf="character.gender === 'Genderless'">
+                        <ng-icon class="text-lg" name="matDoNotDisturbOnOutline"></ng-icon>
+                    </ng-container>
+                    <ng-container *ngIf="character.gender === 'unknown'">
+                        <ng-icon class="text-lg" name="matHelpOutline"></ng-icon>
+                    </ng-container>
+                    <span class="text-base">
+                        {{ character.gender }}
+                    </span>
+                </div>
+
+
+                <a [routerLink]="'/locations/'+getLocationId(character.location.url)"
+                    class="flex items-center justify-center gap-1 transition-all duration-300 hover:opacity-75">
+                    <ng-icon class="text-lg text-zinc-200" name="matPinDropOutline"></ng-icon>
+                    <span class="text-base">{{character.location.name}}</span>
+                </a>
+
+                <a [routerLink]="'/locations/'+getLocationId(character.origin.url)"
+                    class="flex items-center justify-center gap-1 transition-all duration-300 hover:opacity-75">
+                    <ng-icon class="text-lg text-zinc-200" name="matCribOutline"></ng-icon>
+                    <span class="text-base">{{character.origin.name}}</span>
+                </a>
             </div>
-
-            <div class="flex items-center justify-center gap-1">
-                <ng-container *ngIf="character.gender === 'Male'">
-                    <ng-icon class="text-lg" name="matMaleOutline"></ng-icon>
-                </ng-container>
-                <ng-container *ngIf="character.gender === 'Female'">
-                    <ng-icon class="text-lg" name="matFemaleOutline"></ng-icon>
-                </ng-container>
-                <ng-container *ngIf="character.gender === 'Genderless'">
-                    <ng-icon class="text-lg" name="matDoNotDisturbOnOutline"></ng-icon>
-                </ng-container>
-                <ng-container *ngIf="character.gender === 'unknown'">
-                    <ng-icon class="text-lg" name="matHelpOutline"></ng-icon>
-                </ng-container>
-                <span class="text-base">
-                    {{ character.gender }}
-                </span>
-            </div>
-
-
-            <a [routerLink]="'/locations/'+getLocationId(character.location.url)"
-                class="flex items-center justify-center gap-1 transition-all duration-300 hover:opacity-75">
-                <ng-icon class="text-lg text-zinc-200" name="matPinDropOutline"></ng-icon>
-                <span class="text-base">{{character.location.name}}</span>
-            </a>
-
-            <a [routerLink]="'/locations/'+getLocationId(character.origin.url)"
-                class="flex items-center justify-center gap-1 transition-all duration-300 hover:opacity-75">
-                <ng-icon class="text-lg text-zinc-200" name="matCribOutline"></ng-icon>
-                <span class="text-base">{{character.origin.name}}</span>
-            </a>
         </div>
-    </div>
 
-    <div
-        class="flex flex-col items-start justify-center w-full p-4 text-lg rounded-sm sm:w-auto text-zinc-200 bg-slate-900">
-        <span>Episode count {{character.episode.length}}</span>
+        <div
+            class="flex flex-col items-start justify-center w-full p-4 text-lg rounded-sm sm:w-auto text-zinc-200 bg-slate-900">
+            <span>Episode count {{character.episode.length}}</span>
 
-        <div class="z-0 w-full overflow-y-auto rounded-sm sm:w-auto episode-list max-h-96">
-            <a *ngFor="let episode of character.actualEpisodes" id="{{ episode.id }}"
-                class="flex flex-col py-4 transition-all duration-300 episode-card hover:opacity-75"
-                [routerLink]="'/episodes/'+episode.id">
-                <div class="flex items-start justify-start gap-2 text-zinc-200">
-                    <div class="flex items-center justify-center min-w-6">
-                        <ng-icon class="text-2xl text-zinc-200" name="matSlideshowOutline"></ng-icon>
+            <div class="z-0 w-full overflow-y-auto rounded-sm sm:w-auto episode-list max-h-96">
+                <a *ngFor="let episode of character.actualEpisodes" id="{{ episode.id }}"
+                    class="flex flex-col py-4 transition-all duration-300 episode-card hover:opacity-75"
+                    [routerLink]="'/episodes/'+episode.id">
+                    <div class="flex items-start justify-start gap-2 text-zinc-200">
+                        <div class="flex items-center justify-center min-w-6">
+                            <ng-icon class="text-2xl text-zinc-200" name="matSlideshowOutline"></ng-icon>
+                        </div>
+                        <span class="text-lg font-medium line-clamp-1">{{ episode.name }}</span>
                     </div>
-                    <span class="text-lg font-medium line-clamp-1">{{ episode.name }}</span>
-                </div>
-                <div class="flex flex-col items-start justify-start w-full text-zinc-200">
-                    <span class="text-base">{{ transformEpisodeAndSeason(episode.episode) }}</span>
-                    <span class="text-base">{{ episode.air_date }}</span>
-                </div>
-            </a>
+                    <div class="flex flex-col items-start justify-start w-full text-zinc-200">
+                        <span class="text-base">{{ transformEpisodeAndSeason(episode.episode) }}</span>
+                        <span class="text-base">{{ episode.air_date }}</span>
+                    </div>
+                </a>
+            </div>
         </div>
-    </div>
+    </ng-container>
+
+    <!-- loading -->
+
+    <ng-container *ngIf="!isCharacterLoaded">
+        <div
+            class="flex w-full md:max-w-72 animate-pulse flex-col items-center justify-center p-4 rounded-sm sm:w-auto bg-slate-900">
+            <div
+                class="flex items-center justify-center  bg-gray-300 dark:bg-gray-700 object-cover w-64 h-64 rounded-full">
+                <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                    <path
+                        d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+                </svg>
+            </div>
+
+            <div class="flex flex-col items-start justify-center w-full pt-2 text-zinc-200">
+                <div class="h-6 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+
+                <div class="flex items-center justify-center gap-1">
+                    <div class="h-5 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                </div>
+
+                <div class="flex items-center justify-center gap-1">
+                    <div class="h-5 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                </div>
+
+                <div class="h-5 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+
+                <div class="h-5 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+            </div>
+        </div>
+        <div
+            class="flex animate-pulse flex-col items-start justify-center w-full p-4 text-lg rounded-sm sm:w-auto text-zinc-200 bg-slate-900">
+            <div class="h-6 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-4"></div>
+
+            <div class="z-0 w-full overflow-y-auto rounded-sm sm:w-auto episode-list max-h-96 pr-3">
+                <div class="flex flex-col py-4 transition-all duration-300 episode-card hover:opacity-75">
+                    <div class="flex items-start justify-start gap-2 text-zinc-200">
+                        <div class="h-6 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                    </div>
+                    <div class="flex flex-col items-start justify-start w-full text-zinc-200">
+                        <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                        <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col py-4 transition-all duration-300 episode-card hover:opacity-75">
+                    <div class="flex items-start justify-start gap-2 text-zinc-200">
+                        <div class="h-6 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                    </div>
+                    <div class="flex flex-col items-start justify-start w-full text-zinc-200">
+                        <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                        <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col py-4 transition-all duration-300 episode-card hover:opacity-75">
+                    <div class="flex items-start justify-start gap-2 text-zinc-200">
+                        <div class="h-6 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                    </div>
+                    <div class="flex flex-col items-start justify-start w-full text-zinc-200">
+                        <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                        <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col py-4 transition-all duration-300 episode-card hover:opacity-75">
+                    <div class="flex items-start justify-start gap-2 text-zinc-200">
+                        <div class="h-6 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                    </div>
+                    <div class="flex flex-col items-start justify-start w-full text-zinc-200">
+                        <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                        <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
 </div>

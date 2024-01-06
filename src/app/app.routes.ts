@@ -7,6 +7,8 @@ import { NotFoundComponent } from "./components/not-found/not-found.component"
 import { CharacterComponent } from "./pages/character/character.component"
 import { LocationComponent } from "./pages/location/location.component"
 import { EpisodeComponent } from "./pages/episode/episode.component"
+import { PlumbusComponent } from "./pages/plumbus/plumbus.component"
+import { QuestionsComponent } from "./pages/questions/questions.component"
 
 export const routes: Routes = [
   {
@@ -36,6 +38,14 @@ export const routes: Routes = [
   {
     path: "locations/:id",
     component: LocationComponent,
+  },
+  {
+    path: "plumbus",
+    component: PlumbusComponent,
+  },
+  {
+    path: "questions",
+    component: QuestionsComponent,
   },
   {
     path: "**",
