@@ -1,1 +1,65 @@
-<div class="text-6xl font-bold text-zinc-200">{{episode.name}}</div>
+<div class="container flex flex-col items-start justify-center max-w-screen-xl gap-4 px-3 py-4 mx-auto sm:flex-row">
+    <ng-container *ngIf="isEpisodeLoaded">
+        <div class="flex flex-col items-center justify-center w-full p-4 rounded-sm sm:w-auto bg-slate-900">
+            <div class="flex gap-3 items-center justify-start w-full">
+                <div class="sm:flex hidden">
+                    <ng-icon class="text-6xl text-zinc-200" name="matSlideshowOutline"></ng-icon>
+                </div>
+                <div class="flex flex-col items-start justify-center w-full pt-2 text-zinc-200">
+                    <div class="text-xl font-semibold text-zinc-200">{{episode.name}}</div>
+                    <div class="text-lg font-semibold text-zinc-200">{{transformEpisodeAndSeason(episode.episode)}}
+                    </div>
+                    <div class="text-base text-zinc-200">{{episode.air_date}}</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 p-4 overflow-y-auto">
+                <ng-container *ngFor="let character of episode.actualCharacters">
+                    <a id="{{ episode.id }}" class="relative w-26 h-26" href=""
+                        [routerLink]="'/characters/' + character.id">
+                        <img [src]="character.image" class="transition-all duration-300 rounded-full"
+                            [alt]="character.name">
+                        <div
+                            class="absolute inset-0 flex items-center justify-center text-center transition-opacity rounded-full opacity-0 hover:opacity-100 hover:bg-neutral-600/75">
+                            <span class="text-sm font-bold text-zinc-200">{{ character.name }}</span>
+                        </div>
+                    </a>
+                </ng-container>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!isEpisodeLoaded">
+        <div
+            class="flex flex-col animate-pulse items-center justify-center w-full p-4 rounded-sm sm:w-auto bg-slate-900">
+            <div class="flex gap-3 items-center justify-start w-full">
+                <div class="flex items-center justify-center bg-gray-300  dark:bg-gray-700 rounded-full w-16 h-16">
+                    <svg class=" text-gray-200 dark:text-gray-600 rounded-full w-16 h-16" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                        <path
+                            d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+                    </svg>
+                </div>
+
+                <div class="flex flex-col items-start justify-center w-full pt-2 gap-2 text-zinc-200">
+                    <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div>
+                    <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div>
+                    <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 p-4 ">
+                <ng-container *ngFor="let _ of [].constructor(24);">
+                    <div
+                        class="flex items-center justify-center w-full bg-gray-300  dark:bg-gray-700 rounded-full w-26 h-26">
+                        <svg class="w-full h-full text-gray-200 dark:text-gray-600 rounded-full w-26 h-26"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 18 18">
+                            <path
+                                d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+                        </svg>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </ng-container>
+</div>

@@ -59,7 +59,7 @@ export class LocationService {
     .filter(residentId => residentId);
 
   if (validResidentIds.length > 0) {
-    const targetUrl: string = `https://rickandmortyapi.com/api/character/${validResidentIds.slice(0, 20).join(',')}`;
+    const targetUrl: string = `https://rickandmortyapi.com/api/character/${validResidentIds.join(',')}`;
     console.log(targetUrl);
 
     return this.http.get<any>(targetUrl, { headers: this.headers }).pipe(

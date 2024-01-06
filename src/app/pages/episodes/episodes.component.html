@@ -6,17 +6,19 @@
             <div *ngFor="let episode of episodeList" id="{{ episode.id }}"
                 class="relative z-0 w-auto h-full transition-all duration-200 scale-0 rounded-sm opacity-0 min-h-80 episode-card group animate-grow">
                 <div class="relative shadow-md runded-none bg-slate-900">
-                    <div class="flex items-start justify-start gap-2 p-4 text-zinc-200">
+                    <a 
+                    [routerLink]="['/episodes/' + episode.id]"
+                    class="flex items-start justify-start gap-2 p-4 text-zinc-200 hover:opacity-75">
                         <div class="flex items-center justify-center min-w-6">
                             <ng-icon class="text-2xl text-zinc-200" name="matSlideshowOutline"></ng-icon>
                         </div>
                         <span class="text-lg font-medium line-clamp-1">{{ episode.name }}</span>
-                    </div>
+                    </a>
                     <div class="flex flex-col items-start justify-start w-full px-4 text-zinc-200">
                         <span class="text-base">{{ transformEpisodeAndSeason(episode.episode) }}</span>
                         <span class="text-base">{{ episode.air_date }}</span>
                     </div>
-                    <div class="grid grid-cols-3 gap-2 p-4 overflow-y-scroll max-h-[280px]">
+                    <div class="grid grid-cols-3 gap-2 p-4 overflow-y-auto max-h-[280px]">
                         <a *ngFor="let character of episode.actualCharacters" id="{{ episode.id }}"
                             class="relative w-20 h-20" href="" [routerLink]="'/characters/' + character.id">
                             <img [src]="character.image" class="transition-all duration-300 rounded-full"

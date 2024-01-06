@@ -94,7 +94,7 @@ export class CharacterComponent {
       .add(() => {
         setTimeout(() => {
           this.isCharacterLoaded = true
-        }, 500)
+        }, 300)
       })
   }
 

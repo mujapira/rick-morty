@@ -63,7 +63,6 @@ export class EpisodeService {
 
     if (validResidentIds.length > 0) {
       const targetUrl: string = `https://rickandmortyapi.com/api/character/${validResidentIds
-        .slice(0, 20)
         .join(",")}`
       console.log(targetUrl)
 
@@ -89,7 +88,6 @@ export class EpisodeService {
 
     if (validEpisodeIds.length > 0) {
       const targetUrl: string = `https://rickandmortyapi.com/api/episode/${validEpisodeIds
-        .slice(0, 20)
         .join(",")}`
 
       return this.http.get<any>(targetUrl, { headers: this.headers }).pipe(
