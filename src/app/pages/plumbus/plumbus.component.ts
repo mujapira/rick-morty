@@ -2,7 +2,6 @@ import { CommonModule } from "@angular/common"
 import { Component } from "@angular/core"
 import { SliderComponent } from "../../components/slider/slider.component"
 import { FormsModule } from "@angular/forms"
-import { YouTubePlayer, YouTubePlayerModule } from "@angular/youtube-player"
 
 interface Product {
   availableQuantity: number
@@ -18,7 +17,7 @@ interface Product {
 @Component({
   selector: "app-plumbus",
   standalone: true,
-  imports: [CommonModule, SliderComponent, FormsModule, YouTubePlayerModule],
+  imports: [CommonModule, SliderComponent, FormsModule],
   templateUrl: "./plumbus.component.html",
 })
 export class PlumbusComponent {

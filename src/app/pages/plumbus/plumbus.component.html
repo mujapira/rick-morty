@@ -1,12 +1,12 @@
 <div class="flex flex-col items-start justify-center max-w-screen-xl gap-5 px-3 py-4 mx-auto sm:justify-between">
-    <div class="flex flex-col items-center justify-center w-full lg:flex-row">
+    <div class="flex flex-col items-center justify-center w-full lg:flex-row animate-slide">
         <div class="flex items-start justify-end w-auto">
             <app-slider [carouselItems]="carouselItems"></app-slider>
         </div>
 
         <div class="flex flex-col items-start justify-between w-full max-w-lg gap-3 ml-3 text-zinc-200">
             <div class="flex flex-col w-full gap-4">
-                <div class="flex flex-col">
+                <div class="relative z-20 flex flex-col">
                     <span class="text-6xl font-bold">Plumbus</span>
 
                     <span class="text-gray-500">SKU: PLB123</span>
@@ -16,21 +16,21 @@
                     </ng-container>
                 </div>
 
-                <div class="flex *:transition-all *:duration-300">
+                <div class="flex *:transition-all *:duration-300 relative ">
                     <button [disabled]="selectedQuantity < 1"
-                        class="px-4 py-2 font-bold opacity-50 cursor-pointer disabled:cursor-not-allowed bg-slate-600 hover:enabled:bg-teal-300 hover:text-slate-900 hover:opacity-100"
+                        class="px-4 py-2 font-bold cursor-pointer disabled:cursor-not-allowed bg-slate-600 hover:enabled:bg-teal-300 hover:text-slate-900"
                         (click)="decreaseQuantity()">-</button>
                     <input id="quantity" class="hidden" type="number" [value]="selectedQuantity" />
                     <span class="w-10 p-2 text-base text-center">{{ selectedQuantity }}</span>
                     <button [disabled]="selectedQuantity >= product.availableQuantity"
-                        class="px-4 py-2 font-bold opacity-50 cursor-pointer disabled:cursor-not-allowed bg-slate-600 hover:enabled:bg-teal-300 hover:text-slate-900 hover:opacity-100"
+                        class="px-4 py-2 font-bold cursor-pointer disabled:cursor-not-allowed bg-slate-600 hover:enabled:bg-teal-300 hover:text-slate-900"
                         (click)="increaseQuantity()">+</button>
                 </div>
 
-                <div class="flex *:transition-all *:duration-300">
+                <div class="flex *:transition-all *:duration-300 relative z-30">
                     <ng-container *ngFor="let size of product.availableSizes">
                         <label [for]="'size-' + size"
-                            class="px-4 py-2 hover:opacity-70 uppercase font-bold mr-4 rounded-sm cursor-pointer has-[:checked]:bg-teal-300 has-[:checked]:text-slate-900 has-[:checked]:opacity-100 opacity-50 bg-slate-600"
+                            class="px-4 py-2 hover:opacity-70 uppercase font-bold mr-4 rounded-sm cursor-pointer has-[:checked]:bg-teal-300 has-[:checked]:text-slate-900 has-[:checked]:opacity-100 bg-slate-600"
                             [class.checked]="selectedSize === size">
                             {{ size }}
                             <input type="radio" [id]="'size-' + size" name="size" [value]="size" class="hidden peer"
@@ -39,15 +39,23 @@
                     </ng-container>
                 </div>
 
-                <div class="flex justify-start gap-2">
-                    <span class="text-5xl font-bold">${{currentPrice}}</span>
-                    <span class="text-lg font-light text-gray-500 line-through">${{product.originalPrice}}</span>
+                <div class="relative z-30 flex justify-start gap-2">
+                    <span class="text-5xl font-bold">${{currentPrice.toFixed(2)}}</span>
+                    <span
+                        class="px-1 text-lg font-light text-gray-300 line-through rounded-sm bg-slate-700 h-7">${{product.originalPrice.toFixed(2)}}</span>
                 </div>
 
-                <button
-                    class="w-full px-4 py-2 text-xl font-black uppercase transition-all duration-300 bg-teal-300 rounded-sm hover:enabled:opacity-100 opacity-90 disabled:opacity-50 hover:disabled:opacity-70 text-slate-900 disabled:cursor-not-allowed"
-                    [disabled]="selectedQuantity < 1 || selectedSize === ''" (click)="buyNow()">Buy Now
-                </button>
+                <div class="relative z-20">
+                    <button
+                        class="relative z-20 w-full px-4 py-2 text-xl font-black uppercase transition-all duration-300 rounded-sm hover:enabled:bg-teal-300 bg-teal-300/85 disabled:bg-teal-300/50 hover:disabled:bg-teal-300/70 text-slate-900 disabled:cursor-not-allowed"
+                        [disabled]="selectedQuantity < 1 || selectedSize === ''" (click)="buyNow()">
+                        <span>
+                            Buy Now
+                        </span>
+                    </button>
+                    <img src="../../../assets/openningEyes.png" alt=""
+                        class="absolute right-0 z-10 w-48 -top-[170px]">
+                </div>
             </div>
 
             <div class="flex items-center justify-end w-full">
