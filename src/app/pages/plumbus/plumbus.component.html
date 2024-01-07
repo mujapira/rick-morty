@@ -1,1 +1,117 @@
-<p>plumbus works!</p>
+<div class="flex flex-col items-start justify-center max-w-screen-xl gap-5 px-3 py-4 mx-auto sm:justify-between">
+    <div class="flex flex-col items-center justify-center w-full lg:flex-row">
+        <div class="flex items-start justify-end w-auto">
+            <app-slider [carouselItems]="carouselItems"></app-slider>
+        </div>
+
+        <div class="flex flex-col items-start justify-between w-full max-w-lg gap-3 ml-3 text-zinc-200">
+            <div class="flex flex-col w-full gap-4">
+                <div class="flex flex-col">
+                    <span class="text-6xl font-bold">Plumbus</span>
+
+                    <span class="text-gray-500">SKU: PLB123</span>
+
+                    <ng-container *ngIf="product.availableQuantity > 0">
+                        <span class="text-green-700">In Stock</span>
+                    </ng-container>
+                </div>
+
+                <div class="flex *:transition-all *:duration-300">
+                    <button [disabled]="selectedQuantity < 1"
+                        class="px-4 py-2 font-bold opacity-50 cursor-pointer disabled:cursor-not-allowed bg-slate-600 hover:enabled:bg-teal-300 hover:text-slate-900 hover:opacity-100"
+                        (click)="decreaseQuantity()">-</button>
+                    <input id="quantity" class="hidden" type="number" [value]="selectedQuantity" />
+                    <span class="w-10 p-2 text-base text-center">{{ selectedQuantity }}</span>
+                    <button [disabled]="selectedQuantity >= product.availableQuantity"
+                        class="px-4 py-2 font-bold opacity-50 cursor-pointer disabled:cursor-not-allowed bg-slate-600 hover:enabled:bg-teal-300 hover:text-slate-900 hover:opacity-100"
+                        (click)="increaseQuantity()">+</button>
+                </div>
+
+                <div class="flex *:transition-all *:duration-300">
+                    <ng-container *ngFor="let size of product.availableSizes">
+                        <label [for]="'size-' + size"
+                            class="px-4 py-2 hover:opacity-70 uppercase font-bold mr-4 rounded-sm cursor-pointer has-[:checked]:bg-teal-300 has-[:checked]:text-slate-900 has-[:checked]:opacity-100 opacity-50 bg-slate-600"
+                            [class.checked]="selectedSize === size">
+                            {{ size }}
+                            <input type="radio" [id]="'size-' + size" name="size" [value]="size" class="hidden peer"
+                                [(ngModel)]="selectedSize" [checked]="selectedSize === size" />
+                        </label>
+                    </ng-container>
+                </div>
+
+                <div class="flex justify-start gap-2">
+                    <span class="text-5xl font-bold">${{currentPrice}}</span>
+                    <span class="text-lg font-light text-gray-500 line-through">${{product.originalPrice}}</span>
+                </div>
+
+                <button
+                    class="w-full px-4 py-2 text-xl font-black uppercase transition-all duration-300 bg-teal-300 rounded-sm hover:enabled:opacity-100 opacity-90 disabled:opacity-50 hover:disabled:opacity-70 text-slate-900 disabled:cursor-not-allowed"
+                    [disabled]="selectedQuantity < 1 || selectedSize === ''" (click)="buyNow()">Buy Now
+                </button>
+            </div>
+
+            <div class="flex items-center justify-end w-full">
+                <iframe src="https://www.youtube.com/embed/eMJk4y9NGvE" class="w-full aspect-video"
+                    title="Plumbus: How they do it | Rick and Morty | adult swim" frameborder=""
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+            </div>
+
+            <div
+                class="flex flex-col w-full pr-3 overflow-y-auto text-lg leading-tight text-justify text-zinc-200 lg:max-h-28">
+                <p>
+                    <b>Plumbus</b> - the must-have, multi-functional device for your everyday life! Are you tired of
+                    dealing with mundane tasks without the aid of a <b>Plumbus</b>? Well, worry no more, because this
+                    versatile and enigmatic gadget is here to revolutionize the way you live!
+                </p>
+                <p>
+                    Picture this: you wake up in the morning, and the first thing you reach for is your <b>Plumbus</b>.
+                    What
+                    does it
+                    do, you ask? Well, that's the beauty of it - it can do just about anything you want it to! Need a
+                    handy
+                    tool
+                    for your daily chores? The <b>Plumbus</b> has got you covered. It's not just a tool; it's THE tool
+                    you
+                    never
+                    knew
+                    you needed.
+                </p>
+                <p>
+                    But that's not all! The <b>Plumbus</b> isn't just a one-trick pony. It seamlessly blends into any
+                    environment,
+                    making it the perfect accessory for your home. Impress your friends and family with its sleek design
+                    and
+                    mysterious aura. They'll be left wondering, "What is that incredible gadget, and how can I get my
+                    hands
+                    on
+                    one?"
+                </p>
+                <p>
+                    And let's not forget its entertainment value. The <b>Plumbus</b> is a conversation starter, a
+                    mystery
+                    waiting to be
+                    unraveled. Imagine the endless hours of fun as you and your guests try to decipher its true purpose.
+                    It's
+                    not just a device; it's an experience!
+                </p>
+                <p>
+                    But wait, there's more! Order now, and we'll throw in a bonus accessory - the <b>Plumbus</b> Manual!
+                    Unlock
+                    the
+                    secrets of your <b>Plumbus</b> with this exclusive guide that provides insights into its production,
+                    maintenance,
+                    and potential uses. You'll be the envy of your social circle with your newfound <b>Plumbus</b>
+                    knowledge.
+                </p>
+                <p>
+                    Don't miss out on the opportunity to own the most talked-about, multi-functional device in the
+                    multiverse.
+                    Act now, and elevate your lifestyle with the one and only <b>Plumbus</b>!
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+</div>

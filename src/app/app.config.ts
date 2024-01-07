@@ -17,7 +17,6 @@ import { provideAnimations } from "@angular/platform-browser/animations"
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withPreloading(PreloadAllModules)),
-    provideClientHydration(),
     provideHttpClient(withFetch(), withInterceptorsFromDi()),
     provideAnimations(),
   ],

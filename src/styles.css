@@ -11,6 +11,12 @@ body {
   overflow-x: hidden;
 }
 
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
 ::-webkit-scrollbar {
   width: 4px;
   border-radius: 8px;
@@ -31,11 +37,6 @@ body {
   border-radius: 8px;
 }
 
-@font-face {
-  font-family: "FjallaOne";
-  src: url("./assets/fonts/FjallaOne-Regular.ttf") format("ttf");
-}
-
 .special-logo-text {
   font-family: "FjallaOne", sans-serif;
   font-size: 1.625rem;
@@ -51,15 +52,6 @@ body {
 
 .mat-drawer-side {
   border: none !important;
-}
-
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .absolute-center-x {

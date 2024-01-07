@@ -1,0 +1,14 @@
+<div>
+    <ng-container *ngIf="carouselItems.length > 1">
+        <button (click)="onPrevSlide()" class="mr-2 bg-red-600">L</button>
+        <button (click)="onNextSlide()" class="mr-2 bg-red-600">R</button>
+    </ng-container>
+    <div class="overflow-hidden carousel-container">
+        <div class="flex transition-transform duration-500 ease-in carousel"
+            [style.transform]="'translateX(' + (-currentIndex * 100) + '%)'">
+            <div *ngFor="let item of carouselItems; let i = index" class="box-border carousel-item">
+                <img [src]="item.imageUrl" [alt]="item.altText" class="rounded-sm  max-h-[80vh] w-full object-cover" />
+            </div>
+        </div>
+    </div>
+</div>
