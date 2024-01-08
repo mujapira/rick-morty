@@ -6,6 +6,8 @@ import express from "express"
 import { existsSync } from "node:fs"
 import { join } from "node:path"
 import bootstrap from "./src/main.server"
+import { OpenAiService } from "./src/app/services/open-ai.service"
+import { HttpClient } from "@angular/common/http"
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -46,6 +48,19 @@ export function app(): express.Express {
       .catch((err) => next(err))
   })
 
+  
+  server.post("/api/getChatCompletion", async (req, res) => {
+    const input = req.body.input
+    const openAiService = new OpenAiService()
+    try {
+      const chatCompletion = openAiService.getChatCompletionObservable(input)
+      res.json(chatCompletion)
+    } catch (error) {
+      console.error("Error fetching chat completion:", error)
+      res.status(500).json({ error: "Internal Server Error" })
+    }
+  })
+  
   return server
 }
 

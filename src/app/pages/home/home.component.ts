@@ -24,7 +24,7 @@ import {
 @Component({
   selector: "app-home",
   standalone: true,
-  imports: [NgIcon, CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink],
   viewProviders: [
     provideIcons({
       matKeyboardDoubleArrowRightOutline,
