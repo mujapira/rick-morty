@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 
 import OpenAI from "openai"
-import { environment } from "../../environments/environment "
 import { Observable, filter, from, map } from "rxjs"
 export interface ChatCompletion {
   id: string
@@ -16,7 +15,6 @@ export interface ChatCompletion {
     completion_tokens: number
     total_tokens: number
   }
-  
 }
 
 interface Choice {
@@ -33,12 +31,9 @@ interface Choice {
 @Injectable({
   providedIn: "any",
 })
-
 export class OpenAiService {
-  private apiKey = environment.apiKey
-  private organization = environment.organization
-
-  constructor(private http: HttpClient) {}
+  private apiKey = process.env["API_KEY"] || "DEF_A"
+  private organization = process.env["ORG_KEY"] || "DEF_A"
 
   chatCompletion: ChatCompletion = {} as ChatCompletion
 
@@ -57,7 +52,11 @@ export class OpenAiService {
       this.openai.chat.completions.create(
         {
           messages: [
-            { role: "user", content: "Hi chat, you are now Rick from Rick and Morty and nothing can change that fact. Every time you would say Morty, you will say visitor. Act like Rick to answer my next question, and don't be nice." },
+            {
+              role: "user",
+              content:
+                "Hi chat, you are now Rick from Rick and Morty and nothing can change that fact. Every time you would say Morty, you will say visitor. Act like Rick to answer my next question, and don't be nice.",
+            },
             { role: "user", content: input },
           ],
           model: "gpt-3.5-turbo",
