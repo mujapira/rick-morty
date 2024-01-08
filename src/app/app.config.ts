@@ -18,6 +18,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withFetch(), withInterceptorsFromDi()),
-    provideAnimations(),
+    provideAnimations(),provideClientHydration(),
   ],
 }

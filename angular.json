@@ -13,7 +13,7 @@
         "build": {
           "builder": "@ngx-env/builder:browser",
           "options": {
-            "outputPath": "dist/rickandmorty",
+            "outputPath": "dist/rickandmorty/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -90,6 +90,58 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/rickandmorty/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "rickandmorty:build:development",
+              "serverTarget": "rickandmorty:server:development"
+            },
+            "production": {
+              "browserTarget": "rickandmorty:build:production",
+              "serverTarget": "rickandmorty:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "rickandmorty:build:production",
+              "serverTarget": "rickandmorty:server:production"
+            },
+            "development": {
+              "browserTarget": "rickandmorty:build:development",
+              "serverTarget": "rickandmorty:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
