@@ -11,17 +11,10 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@ngx-env/builder:browser",
           "options": {
-            "customWebpackConfig": {
-              "path": "custom-webpack.config.ts",
-              "mergeRules": {
-                "externals": "replace"
-              }
-            },
             "outputPath": "dist/rickandmorty",
             "index": "src/index.html",
-        
             "main": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -62,7 +55,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-builders/custom-webpack:dev-server",
+          "builder": "@ngx-env/builder:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "rickandmorty:build:production"

@@ -32,8 +32,10 @@ interface Choice {
   providedIn: "any",
 })
 export class OpenAiService {
-  private apiKey = process.env["API_KEY"] || "DEF_A"
-  private organization = process.env["ORG_KEY"] || "DEF_A"
+  private apiKey = import.meta.env['NG_APP_API_KEY']
+  private organization = import.meta.env['NG_APP_ORG_KEY']
+
+  constructor(private http: HttpClient) {}
 
   chatCompletion: ChatCompletion = {} as ChatCompletion
 
