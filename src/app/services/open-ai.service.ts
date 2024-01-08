@@ -33,6 +33,7 @@ interface Choice {
 @Injectable({
   providedIn: "any",
 })
+
 export class OpenAiService {
   private apiKey = environment.apiKey
   private organization = environment.organization
