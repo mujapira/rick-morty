@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core"
+import { OpenAiService } from "../../services/open-ai.service"
 
 @Component({
-  selector: 'app-questions',
+  selector: "app-questions",
   standalone: true,
   imports: [],
-  templateUrl: './questions.component.html',
-  styleUrl: './questions.component.css'
+  providers: [OpenAiService],
+  templateUrl: "./questions.component.html",
 })
 export class QuestionsComponent {
+  constructor(private openAiService: OpenAiService) {}
 
+  getAnswer() {
+    this.openAiService.getData()
+  }
 }

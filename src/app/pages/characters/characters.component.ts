@@ -205,4 +205,8 @@ export class CharactersComponent {
     const pageNumber = url.split("page=")[1]
     return parseInt(pageNumber)
   }
+
+  getLocationIdFromUrl(url: string): number {
+    return parseInt(url.split("location/")[1])
+  }
 }

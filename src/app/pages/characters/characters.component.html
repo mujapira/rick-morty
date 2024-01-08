@@ -58,7 +58,8 @@
                                 </span>
                             </div>
 
-                            <a class="flex items-center justify-center gap-1 hover:opacity-75" href="">
+                            
+                            <a class="flex items-center justify-center gap-1 hover:opacity-75" [routerLink]="'/locations/' + getLocationIdFromUrl(character.location.url)">
                                 <ng-icon class="text-lg text-zinc-200" name="matPinDropOutline"></ng-icon>
                                 <span class="text-base line-clamp-1">{{ character.location.name }}</span>
                             </a>
