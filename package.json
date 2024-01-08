@@ -28,6 +28,7 @@
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^17.0.0",
     "@angular-devkit/build-angular": "^17.0.8",
     "@angular/cli": "^17.0.8",
     "@angular/compiler-cli": "^17.0.0",
@@ -35,6 +36,7 @@
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.10.7",
     "autoprefixer": "^10.4.16",
+    "dotenv-webpack": "^8.0.1",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

@@ -11,8 +11,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@ngx-env/builder:application",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "customWebpackConfig": {
+              "path": "src/custom-webpack.config.ts"
+            },
             "outputPath": "dist/rickandmorty",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -55,7 +58,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@ngx-env/builder:dev-server",
+          "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "rickandmorty:build:production"

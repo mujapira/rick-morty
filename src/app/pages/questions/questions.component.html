@@ -1,2 +1,42 @@
-<!-- 
-<button class="w-12 h-12 bg-red-400" (click)="getAnswer()">getData</button> -->
+<div
+    class="container flex flex-col items-center justify-center max-w-screen-xl px-3 py-4 mx-auto sm:justify-between sm:flex-row">
+    <div class="flex flex-col w-full gap-3 animate-slide text-zinc-200">
+
+        <span class="text-6xl font-bold">Ask Rick a question!</span>
+
+        <div
+            class="flex flex-col relative rounded min-h-[calc(100vh-250px)] justify-between animate-slide bg-slate-800 p-4 w-full">
+            <div class="flex flex-col items-center justify-center w-full max-w-3xl mx-auto chat-history">
+                <div *ngFor="let chat of chatHistory" class="flex flex-col gap-3 chat-message text-zinc-200">
+                    <ng-container *ngIf="chat.choices && chat.choices.length > 0">
+                        <div class="flex w-full">
+                            <span class="font-bold">You:</span>
+                            {{chat.choices[0].question}}
+
+                        </div>
+                        <div class="flex w-full">
+                            <span class="font-bold">Rick:</span>
+                            {{ chat.choices[0].message.content }}
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+            <div class="absolute inset-0 w-28 h-28 absolute-center">
+                <img class="opacity-30 w-28 loader" src="../../../assets/rickFace.png" alt="">
+            </div>
+
+            <div class="flex w-full p-2 border rounded-sm user-input border-neutral-300">
+                <input type="text" name="" id="question" [(ngModel)]="question"
+                    class="w-full bg-transparent border-transparent outline-none focus:border-transparent focus:ring-0"
+                    placeholder="Ask Rick..." (keyup.enter)="onEnterPress()" />
+
+                <button [disabled]="isLoading" for="question"
+                    class="flex items-center justify-center p-1 transition-all duration-300 border-none rounded-sm disabled:cursor-not-allowed disabled:bg-slate-900/90 bg-slate-600 hover:bg-slate-900/50"
+                    [disabled]="question.length < 1" (click)="onEnterPress()">
+                    <ng-icon name="matArrowUpwardOutline" class="text-lg"></ng-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
