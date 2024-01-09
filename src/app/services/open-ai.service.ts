@@ -1,9 +1,9 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http"
+import { HttpHeaders } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 
 import OpenAI from "openai"
 import { Observable, filter, from, map } from "rxjs"
-import { environment } from "../../environments/environment"
+import { environment } from "../../environments/environmentDev"
 export interface ChatCompletion {
   id: string
   object: string
