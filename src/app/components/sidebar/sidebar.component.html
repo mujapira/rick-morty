@@ -1,4 +1,4 @@
-<mat-drawer-container class="h-screen " autosize>
+<mat-drawer-container class="h-svh" autosize>
   <mat-drawer #drawer mode="side" [opened]="sidebarService.isSidebarOpen">
     <div class="flex flex-col items-center justify-between h-full p-2 pb-0 bg-slate-800 w-72">
       <div class="flex items-center justify-between w-full">
@@ -19,6 +19,12 @@
         </li>
         <li class="text-base font-medium transition-all duration-300 text-zinc-200 hover:text-zinc-400">
           <a [routerLink]="['/locations']" routerLinkActive="active">Locations</a>
+        </li>
+        <li class="text-base font-medium transition-all duration-300 text-zinc-200 hover:text-zinc-400">
+          <a [routerLink]="['/locations']" routerLinkActive="active">Plumbus</a>
+        </li>
+        <li class="text-base font-medium transition-all duration-300 text-zinc-200 hover:text-zinc-400">
+          <a [routerLink]="['/locations']" routerLinkActive="active">Rick Q&A</a>
         </li>
       </ul>
       <div>
